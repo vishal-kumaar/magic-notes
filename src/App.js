@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Todo from "./components/Todo";
 import TodoForm from "./components/TodoForm";
@@ -21,9 +22,10 @@ function App() {
     <>
     <Navbar mode={mode} toggleMode={toggleMode} title="Magic Todo"/>
     <div className='flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28'>
-    <TodoForm />
-    <Todo />
+      <TodoForm />
+      <Todo />
     </div>
+    <Footer />
     </>
   );
 }

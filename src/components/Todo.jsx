@@ -21,7 +21,7 @@ export default function Todo() {
                     <img src={deleteLogo} alt="" className='inline mx-1' />
                 </div>
             </div>
-            <p className='text-lg ml-6 text-gray-500 h-28'>
+            <p className='text-lg ml-6 text-gray-500 h-28 pr-1'>
                 Todo Task
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut ex debitis, obcaecati deserunt quibusdam libero soluta incidunt reiciendis aperiam, numquam necessitatibus non! Et tenetur unde delectus quia, pariatur exercitationem.
             </p>
