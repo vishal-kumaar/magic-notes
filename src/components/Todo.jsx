@@ -8,7 +8,7 @@ export default function Todo() {
     <div className='my-8'>
         <h1 className='font-extrabold font-sans text-black text-3xl'>All Todos</h1>
         <hr />
-        <div className='my-5 pl-2 pt-2 bg-gray-100 shadow-sm rounded-lg'>
+        <div className='my-5 pl-2 pt-2 bg-gray-100 shadow-md rounded-lg overflow-hidden'>
             <div className='flex justify-between'>
                 <div className=''>
                     <input type="checkbox" className='w-4 h-4'/>
@@ -21,9 +21,10 @@ export default function Todo() {
                     <img src={deleteLogo} alt="" className='inline mx-1' />
                 </div>
             </div>
-            <div className='text-lg ml-6 text-gray-500 h-28'>
-                Todo Tasks
-            </div>
+            <p className='text-lg ml-6 text-gray-500 h-28'>
+                Todo Task
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut ex debitis, obcaecati deserunt quibusdam libero soluta incidunt reiciendis aperiam, numquam necessitatibus non! Et tenetur unde delectus quia, pariatur exercitationem.
+            </p>
         </div>
     </div>
   )

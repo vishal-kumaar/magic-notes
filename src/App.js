@@ -20,7 +20,7 @@ function App() {
   return (
     <>
     <Navbar mode={mode} toggleMode={toggleMode} title="Magic Todo"/>
-    <div className='flex flex-col my-6 w-fit m-auto'>
+    <div className='flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28'>
     <TodoForm />
     <Todo />
     </div>
