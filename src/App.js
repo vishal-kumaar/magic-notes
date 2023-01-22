@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import Todo from "./components/Todo";
+import Todo from "./components/Todos";
 import TodoForm from "./components/TodoForm";
-import Tasks from "./components/Task";
+import Tasks from "./components/Todo";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -32,7 +32,7 @@ function App() {
           </div>
           <Footer />
         </>}></Route>
-        <Route exect path="/task" element={<Tasks />}></Route>
+        <Route exect path="/todo" element={<Tasks />}></Route>
       </Routes>
     </Router>
   );
