@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Navbar from "./components/Navbar";
+import TodoForm from "./components/TodoForm";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
     <Navbar mode={mode} toggleMode={toggleMode} title="Magic Todo"/>
+    <TodoForm />
     </>
   );
 }
