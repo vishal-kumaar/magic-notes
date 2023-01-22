@@ -3,7 +3,7 @@ import logo from "../assets/images/logo.png";
 
 export default function Navbar(props) {
     return (
-        <div className={`flex justify-between px-4 flex-wrap ${props.mode==="dark" ? "bg-black" : "bg-gray-700"}`}>
+        <div className={`flex sticky w-full top-0 left-0 justify-between px-4 flex-wrap ${props.mode==="dark" ? "bg-black" : "bg-gray-700"}`}>
             <div className='flex items-center'>
                 <div className="text-black my-3 bg-white p-1 rounded-lg text-sm font-mono">
                     <img width={25} height={25} src={logo} alt="" />
