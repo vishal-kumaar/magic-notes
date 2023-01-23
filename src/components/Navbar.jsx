@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from "../assets/images/logo.png";
 import colorMode from "../assets/images/color_mode.png";
+import userProfile from "../assets/images/user_profile.svg"
 import { Link } from 'react-router-dom';
 
 export default function Navbar(props) {
@@ -18,14 +19,8 @@ export default function Navbar(props) {
                 <div className='mx-2'>
                     <img src={colorMode} alt="color-mode" className='invert w-6 h-6 cursor-pointer' onClick={props.toggleMode}/>
                 </div>
-                <div className='mx-2 block'>
-                    Hi, Vishal
-                </div>
-                <div className='mx-2 hidden'>
-                    <Link to={"/login"}>Signup/Login</Link>
-                </div>
-                <div className='mx-2'>
-                    <Link to={"/"}>Logout</Link>
+                <div className='ml-2 block'>
+                    <Link to={"/profile"}> <img src={userProfile} alt="profile" className='invert w-7 h-7'/> </Link>
                 </div>
             </div>
         </div>
