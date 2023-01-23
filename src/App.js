@@ -6,6 +6,7 @@ import Todos from "./components/Todos";
 import SearchTodo from "./components/SearchTodo";
 import Todo from "./components/Todo";
 import UserProfile from "./components/UserProfile";
+import Signup from "./components/Signup";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -40,6 +41,7 @@ function App() {
             <Footer mode={mode}/>
           </>
         }></Route>
+        <Route exect path="/signup" element={<Signup mode={mode}/>}></Route>
       </Routes>
     </Router>
   );
