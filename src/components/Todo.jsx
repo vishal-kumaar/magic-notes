@@ -9,7 +9,7 @@ export default function Todo(props) {
     <div className=''>
       <div className={`flex justify-between p-2 ${props.mode==="light" ? "bg-slate-400" : "bg-black"}`}>
         <div className='flex items-center'>
-            <Link to={"/"}><img src={leftArrow} alt="back-button" className={`w-5 ${props.mode==="light" ? "invert-0" : "invert"}`}/></Link>
+            <Link to={"/"}><img src={leftArrow} alt="back-button" className={`w-6 ${props.mode==="light" ? "invert-0" : "invert"}`}/></Link>
             <h1 className={`ml-3 text-3xl font-bold outline-none ${props.mode==="light" ? "text-black" : "text-white"}`} contentEditable={true}>Todo Title</h1>
         </div>
         <div className='flex'>

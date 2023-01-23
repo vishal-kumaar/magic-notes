@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Todos from "./components/Todos";
 import SearchTodo from "./components/SearchTodo";
 import Todo from "./components/Todo";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -33,6 +34,12 @@ function App() {
           <Footer mode={mode}/>
         </>}></Route>
         <Route exect path="/todo" element={<Todo mode={mode} />}></Route>
+        <Route exect path="/profile" element={
+          <>
+            <UserProfile mode={mode} toggleMode={toggleMode}/>
+            <Footer mode={mode}/>
+          </>
+        }></Route>
       </Routes>
     </Router>
   );
