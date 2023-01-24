@@ -46,17 +46,6 @@ export default function Login(props) {
             }`}
           />
         </div>
-        <div className="my-6">
-          <input
-            type="password"
-            placeholder="Password"
-            className={`w-full border-2 py-3 px-6 font-lg outline-none rounded-3xl shadow-md ${
-              props.mode === "light"
-                ? "border-gray-200 bg-white text-gray-500 placeholder:text-gray-500"
-                : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
-            }`}
-          />
-        </div>
         <div className="my-6 mx-1 flex justify-between">
           <div className="flex items-center">
             <input type="checkbox" className="mr-2"/>
