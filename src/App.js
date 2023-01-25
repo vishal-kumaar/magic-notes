@@ -37,7 +37,7 @@ function App() {
           </div>
           <Footer mode={mode}/>
         </>}></Route>
-        <Route exect path="/todo" element={<Todo mode={mode} />}></Route>
+        <Route exect path="/todo" element={<Todo mode={mode} toggleMode={toggleMode}/>}></Route>
         <Route exect path="/profile" element={
           <>
             <UserProfile mode={mode} toggleMode={toggleMode}/>
