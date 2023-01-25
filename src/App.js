@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import UpdatePassword from "./components/UpdatePassword";
+import UpdateName from "./components/UpdateName";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -46,6 +47,7 @@ function App() {
         <Route exect path="/signup" element={<Signup mode={mode}/>}></Route>
         <Route exect path="/login" element={<Login mode={mode}/>}></Route>
         <Route exect path="/updatePassword" element={<UpdatePassword mode={mode}/>}></Route>
+        <Route exect path="/updateName" element={<UpdateName mode={mode}/>}></Route>
       </Routes>
     </Router>
   );
