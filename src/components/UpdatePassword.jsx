@@ -16,7 +16,7 @@ export default function Login(props) {
           />
         </Link>
       </div>
-      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10">
+      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20">
         <div
           className={`font-extrabold text-2xl mb-7 text-center ${
             props.mode === "light" ? "text-black" : "text-white"
@@ -24,7 +24,7 @@ export default function Login(props) {
         >
           Update Password
         </div>
-        <div className="my-10">
+        <div className="my-6">
           <input
             type="password"
             placeholder="Old Password"
@@ -49,7 +49,7 @@ export default function Login(props) {
         <div className="my-6">
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm New Password"
             className={`w-full border-2 py-3 px-6 font-lg outline-none rounded-3xl shadow-md ${
               props.mode === "light"
                 ? "border-gray-200 bg-white text-gray-500 placeholder:text-gray-500"
