@@ -10,21 +10,12 @@ export default function Signup(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const signUp = async(userData) => {
-    if (password !== confirmPassword){
-      alert("Both password need to be same");
-      return;
-    }
-
-    if (!confirmPassword){
-      alert("Confirm password requried");
-      return;
-    }
-    
+  const signUp = async() => {
     const data = {
       name: name,
       email: email,
       password: password,
+      confirmPassword: confirmPassword
     }
 
     const res = await postData("/api/auth/signup", data);
