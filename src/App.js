@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import UpdatePassword from "./components/UpdatePassword";
 import UpdateName from "./components/UpdateName";
 import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -50,6 +51,7 @@ function App() {
         <Route exect path="/updatePassword" element={<UpdatePassword mode={mode}/>}></Route>
         <Route exect path="/updateName" element={<UpdateName mode={mode}/>}></Route>
         <Route exect path="/password/forgot" element={<ForgotPassword mode={mode}/>}></Route>
+        <Route exect path="/password/reset/:resetToken" element={<ResetPassword mode={mode}/>}></Route>
       </Routes>
     </Router>
   );
