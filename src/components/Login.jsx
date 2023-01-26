@@ -1,43 +1,30 @@
 import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
-import axios from "axios";
+import postData from "../utils/postData";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const isLoggedIn = async() => {
-    try {
-      const res = await axios.get("/api/auth/profile");
-      if (res.data.success === true){
-        navigate("/profile");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  isLoggedIn();
-  
   const login = async() => {
-    const data = {
+    const res = await postData('/api/auth/login', {
       email: email,
       password: password
+    });
+
+    if (res.success === true){
+      navigate("/profile");
     }
-    try {
-      const res = await axios.post("/api/auth/login", data);
-      console.log(res)
-    } catch (error) {
-      console.log(error)
+    else{
+      alert(res.message);
     }
   }
 
   const handleForm = async (event) => {
     event.preventDefault();
-    await login();
-    navigate("/profile")
+    login();
   }
 
   return (

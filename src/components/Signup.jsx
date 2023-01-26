@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
-import axios from "axios";
+import postData from "../utils/postData";
 
 export default function Signup(props) {
   const [name, setName] = useState("");
@@ -10,27 +10,14 @@ export default function Signup(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const isLoggedIn = async() => {
-    try {
-      const res = await axios.get("/api/auth/profile");
-      if (res.data.success === true){
-        navigate("/profile");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  isLoggedIn();
-
   const signUp = async(userData) => {
     if (password !== confirmPassword){
-      console.log("Both password need to be same");
+      alert("Both password need to be same");
       return;
     }
 
     if (!confirmPassword){
-      console.log("Confirm password requried");
+      alert("Confirm password requried");
       return;
     }
     
@@ -40,18 +27,18 @@ export default function Signup(props) {
       password: password,
     }
 
-    try {
-      const res = await axios.post("/api/auth/signup", data);
-      console.log(res);
-    } catch (error) {
-      console.log(error)
+    const res = await postData("/api/auth/signup", data);
+    if (res.success === true){
+      navigate("/profile");
+    }
+    else{
+      alert(res.message);
     }
   }
 
   const handleForm = (event) => {
     event.preventDefault();
     signUp();
-    navigate("/profile");
   }
 
   return (

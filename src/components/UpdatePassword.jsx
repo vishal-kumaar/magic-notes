@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 
-export default function Login(props) {
+export default function UpdatePassword(props) {
   return (
     <div>
       <div className="mt-4 ml-2">

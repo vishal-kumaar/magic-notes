@@ -8,29 +8,25 @@ import rightArrow from "../assets/images/right_arrow.svg";
 import colorMode from "../assets/images/color_mode.png"
 import loginIcon from "../assets/images/login_icon.svg"
 import { Link } from "react-router-dom";
-import axios from "axios";
+import getData from "../utils/getData";
 
 export default function UserProfile(props) {
   const [userData, setUserData] = useState(null);
 
   const getProfile = async () => {
-    try {
-      const res = await axios.get("/api/auth/profile");
-      if (res.data.success===true){
-        setUserData(res.data.user);
-      }
-    } catch (error) {
-      console.log(error)
+    const res = await getData("/api/auth/profile");
+    if (res.success === true){
+      setUserData(res.user);
     }
   }
 
   const logout = async () => {
-    try {
-      const res = await axios.get("/api/auth/logout");
-      console.log(res);
+    const res = await getData("/api/auth/logout");
+    if (res.success === true){
       window.location.reload(false);
-    } catch (error) {
-      console.log(error);
+    }
+    else {
+      alert(res.message);
     }
   }
 
