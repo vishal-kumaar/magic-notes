@@ -80,7 +80,7 @@ export default function Login(props) {
             <p className={props.mode==="light" ? "text-black" : "text-gray-300"}>Remember Me</p>
           </div>
           <div className={`text-gray-400 font-normal`}>
-            <Link to="/forgot">Forgot Password?</Link>
+            <Link to="/password/forgot">Forgot Password?</Link>
           </div>
         </div>
         <div className="my-6">
