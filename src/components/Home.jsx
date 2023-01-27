@@ -4,6 +4,10 @@ import deleteLogo from "../assets/images/delete.svg";
 import notesIcon from "../assets/images/notes_icon.svg"
 import TodoForm from "./TodoForm";
 import getData from "../utils/getData";
+import putData from "../utils/putData";
+import deleteData from "../utils/deleteData";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Todos(props) {
   const [formVisibility, setFormVisibility] = useState("hidden");
@@ -13,6 +17,35 @@ export default function Todos(props) {
     const res = await getData("/api/todo");
     if (res.success === true){
       setTodos(res.todos);
+    }
+  }
+
+  const checkTodo = async(todoId) => {
+    const res = await putData(`/api/todo/checkTodo/${todoId}`);
+    if (res.success === false){
+      toast("Something went wrong", {
+        theme:props.mode,
+        type:"warning",
+        autoClose:200
+      });
+    }
+  }
+
+  const deleteTodo = async(todoId) => {
+    const res = await deleteData(`/api/todo/deleteTodo/${todoId}`);
+    if (res.success === false){
+      toast("Something went wrong", {
+        theme:props.mode,
+        type:"error",
+        autoClose:2000
+      });
+    }
+    else{
+      toast("Deleted Successfully", {
+        theme:props.mode,
+        type:"success",
+        autoClose:2000
+      })
     }
   }
 
@@ -39,7 +72,8 @@ export default function Todos(props) {
         </button>
       </div>
       <hr />
-      <TodoForm mode={props.mode} visible={formVisibility}/>
+      <TodoForm mode={props.mode} visible={formVisibility} />
+      <ToastContainer />
       {
         todos === null ?
         (
@@ -50,14 +84,14 @@ export default function Todos(props) {
         )
          : 
         todos.map((todo) => (
-            <div className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${props.mode==="light" ? "bg-gray-100" : " bg-gray-700"}`}>
+            <div className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${props.mode==="light" ? "bg-gray-100" : " bg-gray-700"}`} key={todo._id}>
           <div className="flex justify-between">
             <div className="">
-              <input type="checkbox" className="w-4 h-4" checked={todo.checked} />
+              <input type="checkbox" className="w-4 h-4" checked={todo.checked} onChange={()=> checkTodo(todo._id)} />
               <div className={`inline ml-2 text-xl font-bold font-[serif] ${props.mode==="light" ? "text-black" : "text-white"}`}>{todo.title}</div>
             </div>
             <div>
-              <img src={deleteLogo} alt="delete-button" className={`inline mx-2 ${props.mode==="light" ? "invert-0" : "invert"}`} />
+              <img src={deleteLogo} alt="delete-button" className={`inline mx-2 cursor-pointer ${props.mode==="light" ? "invert-0" : "invert"}`} onClick={() => deleteTodo(todo._id)} />
             </div>
           </div>
           <Link to={"/todo"}>
