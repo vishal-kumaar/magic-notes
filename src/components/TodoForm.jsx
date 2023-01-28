@@ -15,6 +15,7 @@ export default function TodoForm(props) {
         autoClose:2000
       });
       setTitle("")
+      props.setTodos([res.todo]);
     }
     else{
       toast("Something went wrong", {
