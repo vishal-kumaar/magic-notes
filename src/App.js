@@ -15,6 +15,7 @@ import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const [mode, setMode] = useState("light");
+
   const toggleMode = () => {
     if (mode === "dark"){
       setMode("light");
@@ -27,6 +28,7 @@ function App() {
       document.body.classList.remove("bg-light");
     }
   }
+  
   return (
     <Router>
       <Routes>
@@ -39,7 +41,7 @@ function App() {
           </div>
           <Footer mode={mode}/>
         </>}></Route>
-        <Route exect path="/todo" element={<Todo mode={mode} toggleMode={toggleMode}/>}></Route>
+        <Route exect path="/todo/:todoId" element={<Todo mode={mode} toggleMode={toggleMode}/>}></Route>
         <Route exect path="/profile" element={
           <>
             <UserProfile mode={mode} toggleMode={toggleMode}/>
