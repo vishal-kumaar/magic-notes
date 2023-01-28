@@ -90,11 +90,8 @@ export default function TodoList(props) {
                 />
               </div>
             </div>
-            <Link to={"/todo"}>
+            <Link to={`/todo/${todo._id}`}>
               <p className="h-28 pr-1 ml-6">
-                {/* <div className={`text-lg font-[serif] ${props.mode==="light" ? "text-gray-500" : "text-gray-300"}`}>Task 1</div>
-              <div className={`text-lg font-[serif] ${props.mode==="light" ? "text-gray-500" : "text-gray-300"}`}>Task 2</div>
-              <div className={`text-lg font-[serif] ${props.mode==="light" ? "text-gray-500" : "text-gray-300"}`}>Task 3</div> */}
                 {todo.task}
               </p>
             </Link>
