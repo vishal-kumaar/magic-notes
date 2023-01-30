@@ -91,9 +91,13 @@ export default function TodoList(props) {
               </div>
             </div>
             <Link to={`/todo/${todo._id}`}>
-              <p className="h-28 pr-1 ml-6">
-                {todo.task}
-              </p>
+              <div className={`bg-transparent overflow-hidden h-32 mr-4 ml-6 ${props.mode==="light" ? "text-black" : "text-gray-300"}`}>
+                {
+                  todo.task.split("\n").map((line, index) => (
+                    <p key={index}>{line}</p>
+                  ))
+                }
+              </div>
             </Link>
           </div>
         ))
