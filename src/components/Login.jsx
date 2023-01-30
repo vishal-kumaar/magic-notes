@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import postData from "../utils/postData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
@@ -18,7 +20,11 @@ export default function Login(props) {
       navigate("/profile");
     }
     else{
-      alert(res.message);
+      toast(res.message, {
+        type: "error",
+        theme: props.mode,
+        autoClose: 2000
+      });
     }
   }
 
@@ -29,6 +35,7 @@ export default function Login(props) {
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/profile">
           <img

@@ -1,36 +1,41 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ResetPassword(props) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const {resetToken} = useParams();
+  const { resetToken } = useParams();
 
-  const resetPassword = async() => {
+  const resetPassword = async () => {
     const data = {
-        password: newPassword,
-        confirmPassword: confirmPassword
-    }
+      password: newPassword,
+      confirmPassword: confirmPassword,
+    };
     const res = await putData(`/api/auth/password/reset/${resetToken}`, data);
-    if (res.success === true){
-        alert("Successfully reset password");
-        navigate("/login");
+    if (res.success === true) {
+      navigate("/login");
+    } else {
+      toast(res.message, {
+        type: "error",
+        theme: props.mode,
+        autoClose: 2000,
+      });
     }
-    else{
-        alert(res.message);
-    }
-  }
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     resetPassword();
-  }
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/profile">
           <img

@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
 import getData from "../utils/getData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login(props) {
   const [newName, setNewName] = useState("");
@@ -12,32 +14,41 @@ export default function Login(props) {
   const updateName = async () => {
     const data = {
       newName,
-      password
-    }
+      password,
+    };
 
     const res1 = await getData("/api/auth/profile");
-    if (res1.success === true){
-      const res2 = await putData(`/api/auth/username/update/${res1.user._id}`, data);
-      if (res2.success === true){
-        alert("Name successfully updated")
-        navigate("/profile")
+    if (res1.success === true) {
+      const res2 = await putData(
+        `/api/auth/username/update/${res1.user._id}`,
+        data
+      );
+      if (res2.success === true) {
+        navigate("/profile");
+      } else {
+        toast(res2.message, {
+          type: "error",
+          theme: props.mode,
+          autoClose: 2000,
+        });
       }
-      else {
-        alert(res2.message);
-      }
+    } else {
+      toast(res1.message, {
+        type: "error",
+        theme: props,
+        autoClose: 2000,
+      });
     }
-    else {
-      alert(res1.message);
-    }
-  }
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     updateName();
-  }
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/profile">
           <img
@@ -49,7 +60,10 @@ export default function Login(props) {
           />
         </Link>
       </div>
-      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-28" onSubmit={handleForm}>
+      <form
+        className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-28"
+        onSubmit={handleForm}
+      >
         <div
           className={`font-extrabold text-2xl mb-7 text-center ${
             props.mode === "light" ? "text-black" : "text-white"
@@ -67,7 +81,9 @@ export default function Login(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={newName}
-            onChange={(event) => {setNewName(event.target.value)}}
+            onChange={(event) => {
+              setNewName(event.target.value);
+            }}
           />
         </div>
         <div className="my-6">
@@ -80,7 +96,9 @@ export default function Login(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={password}
-            onChange={(event) => {setPassword(event.target.value)}}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
           />
         </div>
         <div className="my-6">

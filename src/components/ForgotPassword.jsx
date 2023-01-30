@@ -2,25 +2,37 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ForgotPassword(props) {
   const [email, setEmail] = useState("");
 
-  const forgotPassword = async() => {
-    const res = await putData("/api/auth/password/forgot", {email});
-    if (res.success === true){
-        setEmail("");
+  const forgotPassword = async () => {
+    const res = await putData("/api/auth/password/forgot", { email });
+    if (res.success === true) {
+      toast(res.mesage, {
+        type: "error",
+        theme: props.mode,
+        autoClose: 2000,
+      });
+      setEmail("");
     }
-    alert(res.message);
-  }
+    toast(res.mesage, {
+      type: "error",
+      theme: props.mode,
+      autoClose: 2000,
+    });
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     forgotPassword();
-  }
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/login">
           <img

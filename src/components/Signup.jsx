@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import postData from "../utils/postData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup(props) {
   const [name, setName] = useState("");
@@ -10,30 +12,34 @@ export default function Signup(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const signUp = async() => {
+  const signUp = async () => {
     const data = {
       name: name,
       email: email,
       password: password,
-      confirmPassword: confirmPassword
-    }
+      confirmPassword: confirmPassword,
+    };
 
     const res = await postData("/api/auth/signup", data);
-    if (res.success === true){
+    if (res.success === true) {
       navigate("/profile");
+    } else {
+      toast(res.message, {
+        type: "error",
+        theme: props.mode,
+        autoClose: 2000,
+      });
     }
-    else{
-      alert(res.message);
-    }
-  }
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     signUp();
-  }
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/login">
           <img
@@ -45,7 +51,10 @@ export default function Signup(props) {
           />
         </Link>
       </div>
-      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10" onSubmit={handleForm}>
+      <form
+        className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10"
+        onSubmit={handleForm}
+      >
         <div
           className={`font-extrabold text-2xl mb-7 text-center ${
             props.mode === "light" ? "text-black" : "text-white"
@@ -63,7 +72,7 @@ export default function Signup(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={name}
-            onChange={(event)=>{
+            onChange={(event) => {
               setName(event.target.value);
             }}
           />
@@ -78,7 +87,7 @@ export default function Signup(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={email}
-            onChange={(event)=>{
+            onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
@@ -93,7 +102,7 @@ export default function Signup(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={password}
-            onChange={(event)=>{
+            onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
@@ -108,7 +117,7 @@ export default function Signup(props) {
                 : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
             }`}
             value={confirmPassword}
-            onChange={(event)=>{
+            onChange={(event) => {
               setConfirmPassword(event.target.value);
             }}
           />

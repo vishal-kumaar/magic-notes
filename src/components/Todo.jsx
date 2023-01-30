@@ -16,7 +16,7 @@ export default function Todo(props) {
   const editTodo = async () => {
     const data = {
       title,
-      task
+      task,
     };
     const res = await putData(`/api/todo/editTodo/${todoId}`, data);
 
@@ -45,11 +45,13 @@ export default function Todo(props) {
     }
   };
 
-  useEffect(() => {
-    getTodo();
-  }, 
-  // eslint-disable-next-line
-  []);
+  useEffect(
+    () => {
+      getTodo();
+    },
+    // eslint-disable-next-line
+    []
+  );
   return (
     <div className="box-border">
       <ToastContainer />
@@ -99,8 +101,14 @@ export default function Todo(props) {
         </div>
       </div>
       <div className="">
-        <textarea type="text" className={`pt-4 px-8 text-2xl font-semibold outline-none ${
-            props.mode === "light" ? "text-black" : "text-white"} bg-transparent h-[91.1vh] w-full resize-none`} defaultValue={task} onBlur={(event) => setTask(event.target.value)} ></textarea>
+        <textarea
+          type="text"
+          className={`pt-4 px-8 text-2xl font-semibold outline-none ${
+            props.mode === "light" ? "text-black" : "text-white"
+          } bg-transparent h-[91.1vh] w-full resize-none`}
+          defaultValue={task}
+          onBlur={(event) => setTask(event.target.value)}
+        ></textarea>
       </div>
     </div>
   );

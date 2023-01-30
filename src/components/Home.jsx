@@ -11,8 +11,7 @@ export default function Todos(props) {
     const res = await getData("/api/todo");
     if (res.success === true) {
       setTodos(res.todos);
-    }
-    else{
+    } else {
       setTodos(null);
     }
   };
@@ -45,7 +44,11 @@ export default function Todos(props) {
         </button>
       </div>
       <hr />
-      <TodoForm mode={props.mode} visible={formVisibility} setTodos={setTodos} />
+      <TodoForm
+        mode={props.mode}
+        visible={formVisibility}
+        setTodos={setTodos}
+      />
       <TodoList mode={props.mode} todos={todos} />
     </div>
   );

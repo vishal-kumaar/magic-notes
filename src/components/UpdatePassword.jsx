@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
 import getData from "../utils/getData";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UpdatePassword(props) {
   const [oldPassword, setOldPassword] = useState("");
@@ -14,32 +16,41 @@ export default function UpdatePassword(props) {
     const data = {
       oldPassword,
       newPassword,
-      confirmPassword
-    }
+      confirmPassword,
+    };
 
     const res1 = await getData("/api/auth/profile");
-    if (res1.success === true){
-      const res2 = await putData(`/api/auth/password/update/${res1.user._id}`, data);
-      if (res2.success === true){
-        alert("Password successfully updated")
-        navigate("/profile")
+    if (res1.success === true) {
+      const res2 = await putData(
+        `/api/auth/password/update/${res1.user._id}`,
+        data
+      );
+      if (res2.success === true) {
+        navigate("/profile");
+      } else {
+        toast(res2.message, {
+          type: "error",
+          theme: props.mode,
+          autoClose: 2000,
+        });
       }
-      else {
-        alert(res2.message);
-      }
+    } else {
+      toast(res1.message, {
+        type: "error",
+        theme: props.mode,
+        autoClose: 2000,
+      });
     }
-    else {
-      alert(res1.message);
-    }
-  }
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     updatePassword();
-  }
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="mt-4 ml-2">
         <Link to="/profile">
           <img
@@ -51,7 +62,10 @@ export default function UpdatePassword(props) {
           />
         </Link>
       </div>
-      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20" onSubmit={handleForm}>
+      <form
+        className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"
+        onSubmit={handleForm}
+      >
         <div
           className={`font-extrabold text-2xl mb-7 text-center ${
             props.mode === "light" ? "text-black" : "text-white"

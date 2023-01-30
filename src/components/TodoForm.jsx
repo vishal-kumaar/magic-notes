@@ -1,35 +1,34 @@
 import React, { useState } from "react";
 import postData from "../utils/postData";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TodoForm(props) {
   const [title, setTitle] = useState("");
 
-  const createTodo = async() => {
-    const res = await postData("/api/todo/createTodo", {title});
-    if (res.success === true){
+  const createTodo = async () => {
+    const res = await postData("/api/todo/createTodo", { title });
+    if (res.success === true) {
       toast("Todo created successfully", {
-        theme:props.mode,
-        type:"success",
-        autoClose:2000
+        theme: props.mode,
+        type: "success",
+        autoClose: 2000,
       });
-      setTitle("")
+      setTitle("");
       props.setTodos([res.todo]);
-    }
-    else{
+    } else {
       toast("Something went wrong", {
-        theme:props.mode,
-        type:"error",
-        autoClose:2000
+        theme: props.mode,
+        type: "error",
+        autoClose: 2000,
       });
     }
-  }
+  };
 
   const handleForm = (event) => {
     event.preventDefault();
     createTodo();
-  }
+  };
   return (
     <div className={props.visible}>
       <ToastContainer />
