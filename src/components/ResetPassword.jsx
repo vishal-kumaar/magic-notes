@@ -18,7 +18,18 @@ export default function ResetPassword(props) {
     };
     const res = await putData(`/api/auth/password/reset/${resetToken}`, data);
     if (res.success === true) {
-      navigate("/login");
+      toast("Password reset successfull", {
+        theme: props.mode,
+        type: "success",
+        autoClose: 1500,
+      });
+
+      setNewPassword("");
+      setConfirmPassword("");
+      
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     } else {
       toast(res.message, {
         type: "error",

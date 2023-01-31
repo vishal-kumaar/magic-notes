@@ -22,7 +22,20 @@ export default function Signup(props) {
 
     const res = await postData("/api/auth/signup", data);
     if (res.success === true) {
-      navigate("/profile");
+      toast("Signup successfull", {
+        theme: props.mode,
+        type: "success",
+        autoClose: 1500,
+      });
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
     } else {
       toast(res.message, {
         type: "error",

@@ -16,7 +16,15 @@ export default function TodoForm(props) {
       });
       setTitle("");
       props.setTodos([res.todo]);
-    } else {
+    }
+    else if (res.message === "Not authorized to access this route") {
+      toast("Please login to access this", {
+        theme: props.mode,
+        type: "warning",
+        autoClose: 2000,
+      });
+    } 
+    else {
       toast("Something went wrong", {
         theme: props.mode,
         type: "error",

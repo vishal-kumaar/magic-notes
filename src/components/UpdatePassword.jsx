@@ -26,7 +26,19 @@ export default function UpdatePassword(props) {
         data
       );
       if (res2.success === true) {
-        navigate("/profile");
+        toast("Password successfully updated", {
+          theme: props.mode,
+          type: "success",
+          autoClose: 1500,
+        });
+  
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+        
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1500);
       } else {
         toast(res2.message, {
           type: "error",

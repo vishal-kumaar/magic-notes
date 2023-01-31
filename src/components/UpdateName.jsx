@@ -6,7 +6,7 @@ import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Login(props) {
+export default function UpdateName(props) {
   const [newName, setNewName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -24,7 +24,18 @@ export default function Login(props) {
         data
       );
       if (res2.success === true) {
-        navigate("/profile");
+        toast("Name successfully updated", {
+          theme: props.mode,
+          type: "success",
+          autoClose: 1500,
+        });
+  
+        setNewName("");
+        setPassword("");
+        
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1500);
       } else {
         toast(res2.message, {
           type: "error",

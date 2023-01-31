@@ -17,7 +17,16 @@ export default function Login(props) {
     });
 
     if (res.success === true){
-      navigate("/profile");
+      toast("Login successfull", {
+        theme: props.mode,
+        type: "success",
+        autoClose: 1500,
+      });
+      setEmail("");
+      setPassword("");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
     }
     else{
       toast(res.message, {
