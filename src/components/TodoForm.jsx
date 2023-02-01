@@ -47,11 +47,11 @@ export default function TodoForm(props) {
         }`}
         onSubmit={handleForm}
       >
-        <div>
+        <div className="w-full">
           <input
             type="text"
             placeholder="Add title..."
-            className={`outline-none w-full p-1 text-lg sm:w-96 lg:w-[40rem] xl:w-[60rem] 2xl:w-[70rem] font-mono bg-transparent ${
+            className={`outline-none w-full p-1 text-lg font-mono bg-transparent ${
               props.mode === "light"
                 ? "placeholder:text-gray-500 text-gray-500 "
                 : "placeholder:text-white text-white "
