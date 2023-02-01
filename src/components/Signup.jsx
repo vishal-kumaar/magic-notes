@@ -8,34 +8,25 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Signup(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const signUp = async () => {
     const data = {
       name: name,
       email: email,
-      password: password,
-      confirmPassword: confirmPassword,
     };
 
     const res = await postData("/api/auth/signup", data);
     if (res.success === true) {
-      toast("Signup successfull", {
+      toast(res.message, {
         theme: props.mode,
         type: "success",
-        autoClose: 1500,
+        autoClose: 3000,
       });
-
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
       
       setTimeout(() => {
-        navigate("/profile");
-      }, 1500);
+        navigate(`/user/verify/${res.user._id}`);
+      }, 3000);
     } else {
       toast(res.message, {
         type: "error",
@@ -102,36 +93,6 @@ export default function Signup(props) {
             value={email}
             onChange={(event) => {
               setEmail(event.target.value);
-            }}
-          />
-        </div>
-        <div className="my-6">
-          <input
-            type="password"
-            placeholder="Password"
-            className={`w-full border-2 py-3 px-6 font-lg outline-none rounded-3xl shadow-md ${
-              props.mode === "light"
-                ? "border-gray-200 bg-white text-gray-500 placeholder:text-gray-500"
-                : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
-            }`}
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </div>
-        <div className="my-6">
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className={`w-full border-2 py-3 px-6 font-lg outline-none rounded-3xl shadow-md ${
-              props.mode === "light"
-                ? "border-gray-200 bg-white text-gray-500 placeholder:text-gray-500"
-                : "border-gray-400 bg-gray-600 text-gray-100 placeholder:text-gray-100"
-            }`}
-            value={confirmPassword}
-            onChange={(event) => {
-              setConfirmPassword(event.target.value);
             }}
           />
         </div>
