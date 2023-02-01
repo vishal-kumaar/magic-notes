@@ -31,10 +31,6 @@ export default function UpdatePassword(props) {
           type: "success",
           autoClose: 1500,
         });
-  
-        setOldPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
         
         setTimeout(() => {
           navigate("/profile");

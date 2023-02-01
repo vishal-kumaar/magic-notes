@@ -12,6 +12,7 @@ import UpdatePassword from "./components/UpdatePassword";
 import UpdateName from "./components/UpdateName";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import VerifyEmail from "./components/VerifyEmail";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -81,6 +82,11 @@ function App() {
           exect
           path="/password/reset/:resetToken"
           element={<ResetPassword mode={mode} />}
+        ></Route>
+        <Route
+          exect
+          path="/user/verify/:userId"
+          element={<VerifyEmail mode={mode} />}
         ></Route>
       </Routes>
     </Router>

@@ -29,9 +29,6 @@ export default function UpdateName(props) {
           type: "success",
           autoClose: 1500,
         });
-  
-        setNewName("");
-        setPassword("");
         
         setTimeout(() => {
           navigate("/profile");

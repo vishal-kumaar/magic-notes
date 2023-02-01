@@ -22,8 +22,7 @@ export default function Login(props) {
         type: "success",
         autoClose: 1500,
       });
-      setEmail("");
-      setPassword("");
+      
       setTimeout(() => {
         navigate("/profile");
       }, 1500);

@@ -18,6 +18,7 @@ export default function TodoForm(props) {
       props.setTodos([res.todo]);
     }
     else if (res.message === "Not authorized to access this route") {
+      console.log(res);
       toast("Please login to access this", {
         theme: props.mode,
         type: "warning",

@@ -23,9 +23,6 @@ export default function ResetPassword(props) {
         type: "success",
         autoClose: 1500,
       });
-
-      setNewPassword("");
-      setConfirmPassword("");
       
       setTimeout(() => {
         navigate("/login");
