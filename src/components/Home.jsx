@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import TodoForm from "./TodoForm";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -10,6 +11,16 @@ import { Link } from "react-router-dom";
 export default function Todos(props) {
   const [formVisibility, setFormVisibility] = useState("hidden");
   const [todos, setTodos] = useState(null);
+  const navigate = useNavigate();
+
+  const isLoggedIn = async() => {
+    const res = await getData("/api/auth/profile");
+    if (res.success === false){
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    }
+  }
 
   const getTodos = async () => {
     const res = await getData("/api/todo");
@@ -19,6 +30,12 @@ export default function Todos(props) {
       setTodos(null);
     }
   };
+
+  useEffect(() => {
+    isLoggedIn();
+  }, 
+  // eslint-disable-next-line
+  [])
 
   useEffect(() => {
     getTodos();
