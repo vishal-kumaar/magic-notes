@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import SearchTodo from "./SearchTodo";
 import getData from "../utils/getData";
 import TodoList from "./TodoList";
+import { Link } from "react-router-dom";
 
 export default function Todos(props) {
   const [formVisibility, setFormVisibility] = useState("hidden");
@@ -31,7 +32,7 @@ export default function Todos(props) {
         title="Magic Todo"
       />
       <div className="flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28">
-        <SearchTodo mode={props.mode} />
+        <Link to={`/search?input=`}><SearchTodo mode={props.mode} focus={false} /></Link>
         <div className="my-8">
           <div className="flex justify-between items-center mb-4">
             <h1
@@ -59,6 +60,7 @@ export default function Todos(props) {
             mode={props.mode}
             visible={formVisibility}
             setTodos={setTodos}
+            todos={todos}
           />
           <TodoList mode={props.mode} todos={todos} />
         </div>

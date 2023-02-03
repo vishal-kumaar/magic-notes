@@ -14,8 +14,12 @@ export default function TodoForm(props) {
         type: "success",
         autoClose: 2000,
       });
+      
       setTitle("");
-      props.setTodos([res.todo]);
+
+      if (props.todos === null){
+        props.setTodos([res.todo]);
+      }
     }
     else if (res.message === "Not authorized to access this route") {
       console.log(res);

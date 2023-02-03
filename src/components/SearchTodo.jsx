@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import searchLogo from "../assets/images/search.svg";
 
 export default function SearchTodo(props) {
+  const [input, setInput] = useState("");
+
+  const handleForm = (event) => {
+    event.preventDefault();
+    props.setSearchParams(`?input=${input}`);
+  }
+
   return (
     <form
+      onSubmit={handleForm}
       className={`flex items-center justify-between border-2 p-2 rounded-xl border-gray-400 ${
         props.mode === "light" ? "bg-white" : "bg-gray-900"
       }`}
@@ -17,6 +25,9 @@ export default function SearchTodo(props) {
               ? " text-gray-500 placeholder:text-gray-500"
               : "text-white placeholder:text-white"
           }`}
+          autoFocus={props.focus}
+          value={input}
+          onChange={(event) => setInput(event.target.value)}
         />
       </div>
       <div className="">
@@ -26,8 +37,7 @@ export default function SearchTodo(props) {
             alt="search-logo"
             className={`w-6 h-6 ${
               props.mode === "light" ? "invert-0" : "invert"
-            }`}
-          />
+            }`}/>
         </button>
       </div>
     </form>

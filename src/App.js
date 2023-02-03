@@ -37,8 +37,8 @@ function App() {
         ></Route>
         <Route
           exect
-          path="/search/result"
-          element={<SearchResult mode={mode} />}
+          path="/search"
+          element={<SearchResult mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route
           exect
