@@ -13,17 +13,23 @@ import VerifyEmail from "./components/VerifyEmail";
 import SearchResult from "./components/SearchResult";
 
 function App() {
-  const [mode, setMode] = useState("light");
-
+  const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
+  
+  if (mode === "dark") {
+    document.body.classList.add("bg-gray-800");
+    document.body.classList.remove("bg-light");
+  } else {
+    document.body.classList.add("bg-light");
+    document.body.classList.remove("bg-gray-800");
+  }
+  
   const toggleMode = () => {
     if (mode === "dark") {
       setMode("light");
-      document.body.classList.add("bg-light");
-      document.body.classList.remove("bg-gray-800");
+      localStorage.setItem("theme", "light");
     } else {
       setMode("dark");
-      document.body.classList.add("bg-gray-800");
-      document.body.classList.remove("bg-light");
+      localStorage.setItem("theme", "dark");
     }
   };
 
