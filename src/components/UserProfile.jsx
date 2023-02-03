@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function UserProfile(props) {
   const [userData, setUserData] = useState(null);
-
+  
   const getProfile = async () => {
     const res = await getData("/api/auth/profile");
     if (res.success === true) {
@@ -87,7 +87,7 @@ export default function UserProfile(props) {
         </div>
       </div>
       <div className="mt-10 mx-8 sm:mx-16 md:mx-24 lg:mx-36 xl:mx-56 2xl:mx-96">
-        <Link to="/updateName" className={userData ? "block" : "hidden"}>
+        <Link to={`/username/update/${userData && userData._id}`} className={userData ? "block" : "hidden"}>
           <div
             className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
               props.mode === "light"
@@ -114,7 +114,7 @@ export default function UserProfile(props) {
             />
           </div>
         </Link>
-        <Link to="/updatePassword" className={userData ? "block" : "hidden"}>
+        <Link to={`/password/update/${userData && userData._id}`} className={userData ? "block" : "hidden"}>
           <div
             className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
               props.mode === "light"

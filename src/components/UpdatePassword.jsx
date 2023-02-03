@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
-import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +10,7 @@ export default function UpdatePassword(props) {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const {userId} = useParams();
 
   const updatePassword = async () => {
     const data = {
@@ -19,37 +19,28 @@ export default function UpdatePassword(props) {
       confirmPassword,
     };
 
-    const res1 = await getData("/api/auth/profile");
-    if (res1.success === true) {
-      const res2 = await putData(
-        `/api/auth/password/update/${res1.user._id}`,
-        data
-      );
-      if (res2.success === true) {
-        toast("Password successfully updated", {
-          theme: props.mode,
-          type: "success",
-          autoClose: 1500,
-        });
-        
-        setTimeout(() => {
-          navigate("/profile");
-        }, 1500);
-      } else {
-        toast(res2.message, {
-          type: "error",
-          theme: props.mode,
-          autoClose: 2000,
-        });
-      }
+    const res = await putData(
+      `/api/auth/password/update/${userId}`,
+      data
+    );
+    if (res.success === true) {
+      toast("Password successfully updated", {
+        theme: props.mode,
+        type: "success",
+        autoClose: 1500,
+      });
+      
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1500);
     } else {
-      toast(res1.message, {
+      toast(res.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,
       });
     }
-  };
+  } 
 
   const handleForm = (event) => {
     event.preventDefault();

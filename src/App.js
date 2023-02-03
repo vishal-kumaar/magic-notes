@@ -65,12 +65,12 @@ function App() {
         <Route exect path="/login" element={<Login mode={mode} />}></Route>
         <Route
           exect
-          path="/updatePassword"
+          path="/password/update/:userId"
           element={<UpdatePassword mode={mode} />}
         ></Route>
         <Route
           exect
-          path="/updateName"
+          path="/username/update/:userId"
           element={<UpdateName mode={mode} />}
         ></Route>
         <Route
