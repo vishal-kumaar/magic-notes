@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./Footer";
 
 export default function UserProfile(props) {
   const [userData, setUserData] = useState(null);
@@ -46,6 +47,7 @@ export default function UserProfile(props) {
   }, [userData]);
 
   return (
+    <>
     <div className={props.mode === "light" ? "bg-white" : "bg-gray-800"}>
       <ToastContainer />
       <div className="flex justify-between items-center py-3 px-5">
@@ -200,5 +202,7 @@ export default function UserProfile(props) {
         </Link>
       </div>
     </div>
+    <Footer mode={props.mode} />
+    </>
   );
 }

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import SearchTodo from "./components/SearchTodo";
 import Todo from "./components/Todo";
 import UserProfile from "./components/UserProfile";
 import Signup from "./components/Signup";
@@ -13,6 +10,7 @@ import UpdateName from "./components/UpdateName";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import VerifyEmail from "./components/VerifyEmail";
+import SearchResult from "./components/SearchResult";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -35,16 +33,12 @@ function App() {
         <Route
           exect
           path="/"
-          element={
-            <>
-              <Navbar mode={mode} toggleMode={toggleMode} title="Magic Todo" />
-              <div className="flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28">
-                <SearchTodo mode={mode} />
-                <Home mode={mode} />
-              </div>
-              <Footer mode={mode} />
-            </>
-          }
+          element={<Home mode={mode} toggleMode={toggleMode} />}
+        ></Route>
+        <Route
+          exect
+          path="/search/result"
+          element={<SearchResult mode={mode} />}
         ></Route>
         <Route
           exect
@@ -54,12 +48,7 @@ function App() {
         <Route
           exect
           path="/profile"
-          element={
-            <>
-              <UserProfile mode={mode} toggleMode={toggleMode} />
-              <Footer mode={mode} />
-            </>
-          }
+          element={<UserProfile mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route exect path="/signup" element={<Signup mode={mode} />}></Route>
         <Route exect path="/login" element={<Login mode={mode} />}></Route>
