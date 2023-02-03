@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import postData from "../utils/postData";
@@ -10,52 +10,53 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const login = async() => {
-    const res = await postData('/api/auth/login', {
+  const login = async () => {
+    const res = await postData("/api/auth/login", {
       email: email,
-      password: password
+      password: password,
     });
 
-    if (res.success === true){
+    if (res.success === true) {
       toast("Login successfull", {
         theme: props.mode,
         type: "success",
         autoClose: 1500,
       });
-      
+
       setTimeout(() => {
-        navigate("/profile");
+        navigate("/");
       }, 1500);
-    }
-    else{
+    } else {
       toast(res.message, {
         type: "error",
         theme: props.mode,
-        autoClose: 2000
+        autoClose: 2000,
       });
     }
-  }
+  };
 
   const handleForm = async (event) => {
     event.preventDefault();
     login();
-  }
+  };
 
   return (
     <div>
       <ToastContainer />
       <div className="mt-4 ml-2">
-        <Link to="/profile">
-          <img
-            src={leftArrow}
-            alt="left-arrow"
-            className={`w-7 h-7 ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-          />
-        </Link>
+        <img
+          src={leftArrow}
+          alt="left-arrow"
+          className={`w-7 h-7 cursor-pointer ${
+            props.mode === "light" ? "invert-0" : "invert"
+          }`}
+          onClick={() => navigate(-1)}
+        />
       </div>
-      <form className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20" onSubmit={handleForm}>
+      <form
+        className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"
+        onSubmit={handleForm}
+      >
         <div
           className={`font-extrabold text-2xl mb-7 text-center ${
             props.mode === "light" ? "text-black" : "text-white"
@@ -91,8 +92,14 @@ export default function Login(props) {
         </div>
         <div className="my-6 mx-1 flex justify-between">
           <div className="flex items-center">
-            <input type="checkbox" className="mr-2"/>
-            <p className={props.mode==="light" ? "text-black" : "text-gray-300"}>Remember Me</p>
+            <input type="checkbox" className="mr-2" />
+            <p
+              className={
+                props.mode === "light" ? "text-black" : "text-gray-300"
+              }
+            >
+              Remember Me
+            </p>
           </div>
           <div className={`text-gray-400 font-normal`}>
             <Link to="/password/forgot">Forgot Password?</Link>

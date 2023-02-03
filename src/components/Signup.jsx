@@ -23,7 +23,7 @@ export default function Signup(props) {
         type: "success",
         autoClose: 3000,
       });
-      
+
       setTimeout(() => {
         navigate(`/user/verify/${res.user._id}`);
       }, 3000);
@@ -45,15 +45,14 @@ export default function Signup(props) {
     <div>
       <ToastContainer />
       <div className="mt-4 ml-2">
-        <Link to="/login">
-          <img
-            src={leftArrow}
-            alt="left-arrow"
-            className={`w-7 h-7 ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-          />
-        </Link>
+        <img
+          src={leftArrow}
+          alt="left-arrow"
+          className={`w-7 h-7 cursor-pointer ${
+            props.mode === "light" ? "invert-0" : "invert"
+          }`}
+          onClick={() => navigate(-1)}
+        />
       </div>
       <form
         className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10"

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import leftArrow from "../assets/images/left_arrow.svg";
 import saveLogo from "../assets/images/save.svg";
 import colorMode from "../assets/images/color_mode.png";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import putData from "../utils/putData";
 import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,6 +12,7 @@ export default function Todo(props) {
   const [title, setTitle] = useState();
   const [task, setTask] = useState();
   const { todoId } = useParams();
+  const navigate = useNavigate();
 
   const editTodo = async () => {
     const data = {
@@ -61,15 +62,12 @@ export default function Todo(props) {
         }`}
       >
         <div className="flex items-center">
-          <Link to={"/"}>
-            <img
-              src={leftArrow}
-              alt="back-button"
-              className={`w-6 ${
-                props.mode === "light" ? "invert-0" : "invert"
-              }`}
-            />
-          </Link>
+          <img
+            src={leftArrow}
+            alt="back-button"
+            className={`w-6 cursor-pointer ${props.mode === "light" ? "invert-0" : "invert"}`}
+            onClick={() => navigate(-1)}
+          />
           <h1
             className={`ml-3 text-3xl font-bold outline-none ${
               props.mode === "light" ? "text-black" : "text-white"

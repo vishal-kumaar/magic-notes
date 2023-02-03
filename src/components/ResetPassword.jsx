@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +23,7 @@ export default function ResetPassword(props) {
         type: "success",
         autoClose: 1500,
       });
-      
+
       setTimeout(() => {
         navigate("/login");
       }, 1500);
@@ -45,15 +45,14 @@ export default function ResetPassword(props) {
     <div>
       <ToastContainer />
       <div className="mt-4 ml-2">
-        <Link to="/profile">
-          <img
-            src={leftArrow}
-            alt="left-arrow"
-            className={`w-7 h-7 ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-          />
-        </Link>
+        <img
+          src={leftArrow}
+          alt="left-arrow"
+          className={`w-7 h-7 cursor-pointer ${
+            props.mode === "light" ? "invert-0" : "invert"
+          }`}
+          onClick={() => navigate(-1)}
+        />
       </div>
       <form
         className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"

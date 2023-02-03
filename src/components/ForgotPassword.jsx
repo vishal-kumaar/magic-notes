@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
 import putData from "../utils/putData";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function ForgotPassword(props) {
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   const forgotPassword = async () => {
     const res = await putData("/api/auth/password/forgot", { email });
@@ -34,15 +35,14 @@ export default function ForgotPassword(props) {
     <div>
       <ToastContainer />
       <div className="mt-4 ml-2">
-        <Link to="/login">
-          <img
-            src={leftArrow}
-            alt="left-arrow"
-            className={`w-7 h-7 ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-          />
-        </Link>
+        <img
+          src={leftArrow}
+          alt="left-arrow"
+          className={`w-7 h-7 cursor-pointer ${
+            props.mode === "light" ? "invert-0" : "invert"
+          }`}
+          onClick={() => navigate(-1)}
+        />
       </div>
       <form
         className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"
