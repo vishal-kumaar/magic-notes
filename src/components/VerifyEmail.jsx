@@ -39,11 +39,11 @@ export default function VerifyEmail(props) {
   };
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
-        <Loading height={100} />
+        <Loading />
       ) : (
         <div className="mt-40">
-          <ToastContainer />
           <form
             className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10"
             onSubmit={handleForm}

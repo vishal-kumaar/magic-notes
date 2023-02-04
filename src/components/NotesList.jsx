@@ -38,11 +38,11 @@ export default function NotesList(props) {
   };
   return (
     <>
+      <ToastContainer />
       {props.isLoading ? (
-        <Loading height={50} />
+        <Loading height={"half"} />
       ) : (
         <div>
-          <ToastContainer />
           {props.notes === null ? (
             <div className={`flex flex-col items-center mt-28`}>
               <img

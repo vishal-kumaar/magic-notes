@@ -59,11 +59,11 @@ export default function Note(props) {
   );
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
-        <Loading height={100} />
+        <Loading />
       ) : (
         <div className="box-border">
-          <ToastContainer />
           <div
             className={`flex items-center w-full sticky h-[8vh] top-0 justify-between p-2 ${
               props.mode === "light" ? "bg-slate-400" : "bg-black"

@@ -51,11 +51,11 @@ export default function UpdatePassword(props) {
 
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
-        <Loading height={100}/>
+        <Loading />
       ) : (
         <div>
-          <ToastContainer />
           <div className="mt-4 mx-2 flex justify-between items-center">
             <img
               src={leftArrow}

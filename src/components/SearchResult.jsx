@@ -76,6 +76,7 @@ export default function SearchResult(props) {
 
   return (
     <>
+      <ToastContainer />
       <Navbar
         mode={props.mode}
         toggleMode={props.toggleMode}
@@ -88,10 +89,9 @@ export default function SearchResult(props) {
           focus={true}
         />
         {isLoading ? (
-          <Loading height={40} />
+          <Loading height={"half"} />
         ) : (
           <div>
-            <ToastContainer />
             {notes === null || notes.length === 0 ? (
               <div className={`flex flex-col items-center mt-16`}>
                 <img src={notFound} alt="not-found" className={`w-60 h-60`} />

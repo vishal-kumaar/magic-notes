@@ -52,12 +52,12 @@ export default function UserProfile(props) {
 
   return (
     <>
+      <ToastContainer />
       {isLoading ? (
-        <Loading height={100}/>
+        <Loading />
       ) : (
         <>
           <div className={props.mode === "light" ? "bg-white" : "bg-gray-800"}>
-            <ToastContainer />
             <div className="flex justify-between items-center py-3 px-5">
               <img
                 src={leftArrow}
@@ -68,13 +68,13 @@ export default function UserProfile(props) {
                 onClick={() => navigate(-1)}
               />
               <img
-              src={homeIcon}
-              alt="home-icon"
-              className={`w-9 cursor-pointer ${
-                props.mode === "light" ? "invert-0" : "invert"
-              }`}
-              onClick={() => navigate("/")}
-            />
+                src={homeIcon}
+                alt="home-icon"
+                className={`w-9 cursor-pointer ${
+                  props.mode === "light" ? "invert-0" : "invert"
+                }`}
+                onClick={() => navigate("/")}
+              />
             </div>
             <div className="flex flex-col items-center justify-center mx-8 mt-2">
               <div>
