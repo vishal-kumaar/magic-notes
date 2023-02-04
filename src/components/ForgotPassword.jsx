@@ -17,7 +17,7 @@ export default function ForgotPassword(props) {
     const res = await putData("/api/auth/password/forgot", { email });
     if (res.success === true) {
       toast(res.message, {
-        type: "error",
+        type: "success",
         theme: props.mode,
         autoClose: 2000,
       });
