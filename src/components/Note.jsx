@@ -8,22 +8,22 @@ import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Todo(props) {
+export default function Note(props) {
   const [title, setTitle] = useState();
-  const [task, setTask] = useState();
-  const { todoId } = useParams();
+  const [body, setBody] = useState();
+  const { noteId } = useParams();
   const navigate = useNavigate();
 
-  const editTodo = async () => {
+  const editNote = async () => {
     const data = {
       title,
-      task,
+      body,
     };
-    const res = await putData(`/api/todo/editTodo/${todoId}`, data);
+    const res = await putData(`/api/note/editNote/${noteId}`, data);
 
     if (res.success === true) {
-      setTitle(res.todo.title);
-      setTask(res.todo.task);
+      setTitle(res.note.title);
+      setBody(res.note.body);
       toast("Saved", {
         theme: props.mode,
         type: "success",
@@ -38,17 +38,17 @@ export default function Todo(props) {
     }
   };
 
-  const getTodo = async () => {
-    const res = await getData(`/api/todo/getTodo/${todoId}`);
+  const getNote = async () => {
+    const res = await getData(`/api/note/getNote/${noteId}`);
     if (res.success === true) {
-      setTitle(res.todo.title);
-      setTask(res.todo.task);
+      setTitle(res.note.title);
+      setBody(res.note.body);
     }
   };
 
   useEffect(
     () => {
-      getTodo();
+      getNote();
     },
     // eslint-disable-next-line
     []
@@ -65,7 +65,9 @@ export default function Todo(props) {
           <img
             src={leftArrow}
             alt="back-button"
-            className={`w-6 cursor-pointer ${props.mode === "light" ? "invert-0" : "invert"}`}
+            className={`w-6 cursor-pointer ${
+              props.mode === "light" ? "invert-0" : "invert"
+            }`}
             onClick={() => navigate(-1)}
           />
           <h1
@@ -94,7 +96,7 @@ export default function Todo(props) {
             className={`w-7 h-7 mx-1 cursor-pointer ${
               props.mode === "light" ? "invert-0" : "invert"
             }`}
-            onClick={() => editTodo()}
+            onClick={() => editNote()}
           />
         </div>
       </div>
@@ -104,8 +106,8 @@ export default function Todo(props) {
           className={`pt-4 px-8 text-2xl font-semibold outline-none ${
             props.mode === "light" ? "text-black" : "text-white"
           } bg-transparent h-[91.1vh] w-full resize-none`}
-          defaultValue={task}
-          onBlur={(event) => setTask(event.target.value)}
+          defaultValue={body}
+          onBlur={(event) => setBody(event.target.value)}
         ></textarea>
       </div>
     </div>

@@ -90,7 +90,7 @@ export default function UserProfile(props) {
         </div>
         <div className="mt-10 mx-8 sm:mx-16 md:mx-24 lg:mx-36 xl:mx-56 2xl:mx-96">
           <Link
-            to={`/username/update/${userData && userData._id}`}
+            to={`/update/name/${userData && userData._id}`}
             className={userData ? "block" : "hidden"}
           >
             <div
@@ -120,7 +120,7 @@ export default function UserProfile(props) {
             </div>
           </Link>
           <Link
-            to={`/password/update/${userData && userData._id}`}
+            to={`/update/password/${userData && userData._id}`}
             className={userData ? "block" : "hidden"}
           >
             <div

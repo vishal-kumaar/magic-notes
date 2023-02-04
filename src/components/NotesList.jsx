@@ -7,9 +7,9 @@ import deleteData from "../utils/deleteData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function TodoList(props) {
-  const checkTodo = async (todoId) => {
-    const res = await putData(`/api/todo/checkTodo/${todoId}`);
+export default function NotesList(props) {
+  const checkNote = async (noteId) => {
+    const res = await putData(`/api/note/checkNote/${noteId}`);
     if (res.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
@@ -19,8 +19,8 @@ export default function TodoList(props) {
     }
   };
 
-  const deleteTodo = async (todoId) => {
-    const res = await deleteData(`/api/todo/deleteTodo/${todoId}`);
+  const deleteNote = async (noteId) => {
+    const res = await deleteData(`/api/note/deleteNote/${noteId}`);
     if (res.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
@@ -38,7 +38,7 @@ export default function TodoList(props) {
   return (
     <div>
       <ToastContainer />
-      {props.todos === null ? (
+      {props.notes === null ? (
         <div className={`flex flex-col items-center mt-28`}>
           <img
             src={notesIcon}
@@ -48,35 +48,35 @@ export default function TodoList(props) {
             }`}
           />
           <div
-            className={`font-normal text-2xl mt-2 ${
+            className={`font-normal text-xl mt-2 ${
               props.mode === "light" ? "text-black" : "text-white"
             }`}
           >
-            Nothing to show add you first todo
+            Nothing to show add you first note
           </div>
         </div>
       ) : (
-        props.todos.map((todo) => (
+        props.notes.map((note) => (
           <div
             className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${
               props.mode === "light" ? "bg-gray-100" : " bg-gray-700"
             }`}
-            key={todo._id}
+            key={note._id}
           >
             <div className="flex justify-between">
               <div className="">
                 <input
                   type="checkbox"
                   className="w-4 h-4"
-                  checked={todo.checked}
-                  onChange={() => checkTodo(todo._id)}
+                  checked={note.checked}
+                  onChange={() => checkNote(note._id)}
                 />
                 <div
                   className={`inline ml-2 text-xl font-bold font-[serif] ${
                     props.mode === "light" ? "text-black" : "text-white"
                   }`}
                 >
-                  {todo.title}
+                  {note.title}
                 </div>
               </div>
               <div>
@@ -86,22 +86,25 @@ export default function TodoList(props) {
                   className={`inline mx-2 cursor-pointer ${
                     props.mode === "light" ? "invert-0" : "invert"
                   }`}
-                  onClick={() => deleteTodo(todo._id)}
+                  onClick={() => deleteNote(note._id)}
                 />
               </div>
             </div>
-            <Link to={`/todo/${todo._id}`}>
+            <Link to={`/note/${note._id}`}>
               <div className={`bg-transparent overflow-hidden h-32 mr-4 ml-6`}>
-                {todo.task.split("\n").map((line, index) => (
-                  <p
-                    key={index}
-                    className={`${
-                      props.mode === "light" ? "text-black" : "text-gray-300"
-                    }`}
-                  >
-                    {line}
-                  </p>
-                ))}
+                {note.body
+                  .split("\n")
+                  .slice(0, 5)
+                  .map((line, index) => (
+                    <p
+                      key={index}
+                      className={`${
+                        props.mode === "light" ? "text-black" : "text-gray-300"
+                      }`}
+                    >
+                      {line}
+                    </p>
+                  ))}
               </div>
             </Link>
           </div>

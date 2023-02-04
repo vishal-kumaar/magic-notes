@@ -3,13 +3,13 @@ import postData from "../utils/postData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function TodoForm(props) {
+export default function NoteForm(props) {
   const [title, setTitle] = useState("");
 
-  const createTodo = async () => {
-    const res = await postData("/api/todo/createTodo", { title });
+  const createNote = async () => {
+    const res = await postData("/api/note/createNote", { title });
     if (res.success === true) {
-      toast("Todo created successfully", {
+      toast("Note created successfully", {
         theme: props.mode,
         type: "success",
         autoClose: 2000,
@@ -17,12 +17,11 @@ export default function TodoForm(props) {
       
       setTitle("");
 
-      if (props.todos === null){
-        props.setTodos([res.todo]);
+      if (props.notes === null){
+        props.setNotes([res.todo]);
       }
     }
     else if (res.message === "Not authorized to access this route") {
-      console.log(res);
       toast("Please login to access this", {
         theme: props.mode,
         type: "warning",
@@ -40,7 +39,7 @@ export default function TodoForm(props) {
 
   const handleForm = (event) => {
     event.preventDefault();
-    createTodo();
+    createNote();
   };
   return (
     <div className={props.visible}>

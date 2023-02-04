@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import searchLogo from "../assets/images/search.svg";
 
-export default function SearchTodo(props) {
+export default function SearchNotes(props) {
   const [input, setInput] = useState("");
 
   const handleForm = (event) => {
     event.preventDefault();
     props.setSearchParams(`?input=${input}`);
-  }
+  };
 
   return (
     <form
@@ -37,7 +37,8 @@ export default function SearchTodo(props) {
             alt="search-logo"
             className={`w-6 h-6 ${
               props.mode === "light" ? "invert-0" : "invert"
-            }`}/>
+            }`}
+          />
         </button>
       </div>
     </form>

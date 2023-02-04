@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Todo from "./components/Todo";
+import Note from "./components/Note";
 import UserProfile from "./components/UserProfile";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -14,7 +14,7 @@ import SearchResult from "./components/SearchResult";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
-  
+
   if (mode === "dark") {
     document.body.classList.add("bg-gray-800");
     document.body.classList.remove("bg-light");
@@ -22,7 +22,7 @@ function App() {
     document.body.classList.add("bg-light");
     document.body.classList.remove("bg-gray-800");
   }
-  
+
   const toggleMode = () => {
     if (mode === "dark") {
       setMode("light");
@@ -48,8 +48,8 @@ function App() {
         ></Route>
         <Route
           exect
-          path="/todo/:todoId"
-          element={<Todo mode={mode} toggleMode={toggleMode} />}
+          path="/note/:noteId"
+          element={<Note mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route
           exect
@@ -60,12 +60,12 @@ function App() {
         <Route exect path="/login" element={<Login mode={mode} />}></Route>
         <Route
           exect
-          path="/password/update/:userId"
+          path="/update/password/:userId"
           element={<UpdatePassword mode={mode} />}
         ></Route>
         <Route
           exect
-          path="/username/update/:userId"
+          path="/update/name/:userId"
           element={<UpdateName mode={mode} />}
         ></Route>
         <Route

@@ -8,7 +8,7 @@ export default function Footer(props) {
           props.mode === "light" ? "bg-gray-700" : "bg-gray-900"
         }`}
       >
-        Copyright &copy; Magic Todo 2023
+        Copyright &copy; Magic Notes 2023
       </div>
     </div>
   );

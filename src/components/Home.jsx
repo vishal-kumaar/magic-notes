@@ -1,55 +1,59 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TodoForm from "./TodoForm";
+import NoteForm from "./NoteForm";
 import Navbar from "./Navbar";
+import SearchNotes from "./SearchNotes";
 import Footer from "./Footer";
-import SearchTodo from "./SearchTodo";
 import getData from "../utils/getData";
-import TodoList from "./TodoList";
+import NotesList from "./NotesList";
 import { Link } from "react-router-dom";
 
-export default function Todos(props) {
+export default function Home(props) {
   const [formVisibility, setFormVisibility] = useState("hidden");
-  const [todos, setTodos] = useState(null);
+  const [notes, setNotes] = useState(null);
   const navigate = useNavigate();
 
-  const isLoggedIn = async() => {
+  const isLoggedIn = async () => {
     const res = await getData("/api/auth/profile");
-    if (res.success === false){
+    if (res.success === false) {
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     }
-  }
+  };
 
-  const getTodos = async () => {
-    const res = await getData("/api/todo");
+  const getNotes = async () => {
+    const res = await getData("/api/note/getNotes");
     if (res.success === true) {
-      setTodos(res.todos);
+      setNotes(res.notes);
     } else {
-      setTodos(null);
+      setNotes(null);
     }
   };
 
-  useEffect(() => {
-    isLoggedIn();
-  }, 
-  // eslint-disable-next-line
-  [])
+  useEffect(
+    () => {
+      isLoggedIn();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   useEffect(() => {
-    getTodos();
-  }, [todos]);
+    getNotes();
+  }, [notes]);
 
   return (
     <>
       <Navbar
         mode={props.mode}
         toggleMode={props.toggleMode}
-        title="Magic Todo"
+        title="Magic Notes"
       />
       <div className="flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28">
-        <Link to={`/search?input=`}><SearchTodo mode={props.mode} focus={false} /></Link>
+        <Link to={`/search?input=`}>
+          <SearchNotes mode={props.mode} focus={false} />
+        </Link>
         <div className="my-8">
           <div className="flex justify-between items-center mb-4">
             <h1
@@ -57,7 +61,7 @@ export default function Todos(props) {
                 props.mode === "light" ? "text-black" : "text-white"
               }`}
             >
-              All Todos
+              All Notes
             </h1>
             <button
               className="bg-green-500 px-3 py-2 rounded-md text-white font-semibold shadow-md"
@@ -69,17 +73,17 @@ export default function Todos(props) {
                 }
               }}
             >
-              {formVisibility === "hidden" ? "Create New Todo" : "Done"}
+              {formVisibility === "hidden" ? "Create New Note" : "Done"}
             </button>
           </div>
           <hr />
-          <TodoForm
+          <NoteForm
             mode={props.mode}
             visible={formVisibility}
-            setTodos={setTodos}
-            todos={todos}
+            setNotes={setNotes}
+            notes={notes}
           />
-          <TodoList mode={props.mode} todos={todos} />
+          <NotesList mode={props.mode} notes={notes} />
         </div>
       </div>
       <Footer mode={props.mode} />
