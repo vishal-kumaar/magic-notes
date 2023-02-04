@@ -61,7 +61,7 @@ export default function NotesList(props) {
               </div>
             </div>
           ) : (
-            props.notes.map((note) => (
+            props.notes.reverse().map((note) => (
               <div
                 className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${
                   props.mode === "light" ? "bg-gray-100" : " bg-gray-700"
