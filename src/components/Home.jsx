@@ -9,6 +9,7 @@ import NotesList from "./NotesList";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
+  const [isLoading, setLoading] = useState(true);
   const [formVisibility, setFormVisibility] = useState("hidden");
   const [notes, setNotes] = useState(null);
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function Home(props) {
     } else {
       setNotes(null);
     }
+    setLoading(false);
   };
 
   useEffect(
@@ -83,7 +85,7 @@ export default function Home(props) {
             setNotes={setNotes}
             notes={notes}
           />
-          <NotesList mode={props.mode} notes={notes} />
+          <NotesList mode={props.mode} notes={notes} isLoading={isLoading} />
         </div>
       </div>
       <Footer mode={props.mode} />

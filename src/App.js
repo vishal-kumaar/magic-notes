@@ -54,7 +54,7 @@ function App() {
         <Route
           exect
           path="/profile"
-          element={<UserProfile mode={mode} toggleMode={toggleMode} />}
+          element={<UserProfile mode={mode} />}
         ></Route>
         <Route exect path="/signup" element={<Signup mode={mode} />}></Route>
         <Route exect path="/login" element={<Login mode={mode} />}></Route>

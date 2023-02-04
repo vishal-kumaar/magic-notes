@@ -18,7 +18,7 @@ export default function NoteForm(props) {
       setTitle("");
 
       if (props.notes === null){
-        props.setNotes([res.todo]);
+        props.setNotes([res.note]);
       }
     }
     else if (res.message === "Not authorized to access this route") {

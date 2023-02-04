@@ -7,8 +7,10 @@ import putData from "../utils/putData";
 import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../components/Loading";
 
 export default function Note(props) {
+  const [isLoading, setLoading] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   const { noteId } = useParams();
@@ -39,11 +41,13 @@ export default function Note(props) {
   };
 
   const getNote = async () => {
+    setLoading(true);
     const res = await getData(`/api/note/getNote/${noteId}`);
     if (res.success === true) {
       setTitle(res.note.title);
       setBody(res.note.body);
     }
+    setLoading(false);
   };
 
   useEffect(
@@ -54,62 +58,68 @@ export default function Note(props) {
     []
   );
   return (
-    <div className="box-border">
-      <ToastContainer />
-      <div
-        className={`flex items-center w-full sticky h-[8vh] top-0 justify-between p-2 ${
-          props.mode === "light" ? "bg-slate-400" : "bg-black"
-        }`}
-      >
-        <div className="flex items-center">
-          <img
-            src={leftArrow}
-            alt="back-button"
-            className={`w-6 cursor-pointer ${
-              props.mode === "light" ? "invert-0" : "invert"
+    <>
+      {isLoading ? (
+        <Loading height={100} />
+      ) : (
+        <div className="box-border">
+          <ToastContainer />
+          <div
+            className={`flex items-center w-full sticky h-[8vh] top-0 justify-between p-2 ${
+              props.mode === "light" ? "bg-slate-400" : "bg-black"
             }`}
-            onClick={() => navigate(-1)}
-          />
-          <h1
-            className={`ml-3 text-3xl font-bold outline-none ${
-              props.mode === "light" ? "text-black" : "text-white"
-            }`}
-            contentEditable={true}
-            suppressContentEditableWarning={true}
-            onBlur={(event) => setTitle(event.target.innerText)}
           >
-            {title}
-          </h1>
+            <div className="flex items-center">
+              <img
+                src={leftArrow}
+                alt="back-button"
+                className={`w-6 cursor-pointer ${
+                  props.mode === "light" ? "invert-0" : "invert"
+                }`}
+                onClick={() => navigate(-1)}
+              />
+              <h1
+                className={`ml-3 text-3xl font-bold outline-none ${
+                  props.mode === "light" ? "text-black" : "text-white"
+                }`}
+                contentEditable={true}
+                suppressContentEditableWarning={true}
+                onBlur={(event) => setTitle(event.target.innerText)}
+              >
+                {title}
+              </h1>
+            </div>
+            <div className="flex">
+              <img
+                src={colorMode}
+                alt="color-mode"
+                className={`w-7 h-7 mx-2 cursor-pointer ${
+                  props.mode === "light" ? "invert-0" : "invert"
+                }`}
+                onClick={props.toggleMode}
+              />
+              <img
+                src={saveLogo}
+                alt="save-button"
+                className={`w-7 h-7 mx-1 cursor-pointer ${
+                  props.mode === "light" ? "invert-0" : "invert"
+                }`}
+                onClick={() => editNote()}
+              />
+            </div>
+          </div>
+          <div className="">
+            <textarea
+              type="text"
+              className={`pt-4 px-8 text-2xl font-semibold outline-none ${
+                props.mode === "light" ? "text-black" : "text-white"
+              } bg-transparent h-[91.1vh] w-full resize-none`}
+              defaultValue={body}
+              onBlur={(event) => setBody(event.target.value)}
+            ></textarea>
+          </div>
         </div>
-        <div className="flex">
-          <img
-            src={colorMode}
-            alt="color-mode"
-            className={`w-7 h-7 mx-2 cursor-pointer ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-            onClick={props.toggleMode}
-          />
-          <img
-            src={saveLogo}
-            alt="save-button"
-            className={`w-7 h-7 mx-1 cursor-pointer ${
-              props.mode === "light" ? "invert-0" : "invert"
-            }`}
-            onClick={() => editNote()}
-          />
-        </div>
-      </div>
-      <div className="">
-        <textarea
-          type="text"
-          className={`pt-4 px-8 text-2xl font-semibold outline-none ${
-            props.mode === "light" ? "text-black" : "text-white"
-          } bg-transparent h-[91.1vh] w-full resize-none`}
-          defaultValue={body}
-          onBlur={(event) => setBody(event.target.value)}
-        ></textarea>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
