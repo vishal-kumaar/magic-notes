@@ -9,7 +9,7 @@ export default function Navbar(props) {
 
   return (
     <div
-      className={`flex sticky w-full top-0 left-0 justify-between items-center px-4 flex-wrap ${
+      className={`flex z-10 sticky w-full top-0 left-0 justify-between items-center px-4 flex-wrap ${
         props.mode === "dark" ? "bg-black" : "bg-gray-700"
       }`}
     >
