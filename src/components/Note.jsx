@@ -13,6 +13,7 @@ export default function Note(props) {
   const [isLoading, setLoading] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  const [editTime, setEditTime] = useState();
   const { noteId } = useParams();
   const navigate = useNavigate();
 
@@ -44,9 +45,14 @@ export default function Note(props) {
     setLoading(true);
     const res = await getData(`/api/note/getNote/${noteId}`);
     if (res.success === true) {
+      const date = new Date(res.note.updatedAt);
+      const editDate = `Edited on ${date.toLocaleString("default", { month: "short" })} ${date.getDate()}, ${date.getFullYear()} ${("0" + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours())).slice(-2)}:${("0" + date.getMinutes()).slice(-2)} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+
       setTitle(res.note.title);
       setBody(res.note.body);
+      setEditTime(editDate);
     }
+
     setLoading(false);
   };
 
@@ -63,13 +69,13 @@ export default function Note(props) {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="box-border">
+        <div className="flex flex-col h-screen">
           <div
-            className={`flex items-center w-full sticky h-[8vh] top-0 justify-between p-2 ${
+            className={`flex items-center w-full fixed h-14 top-0 left-0 p-2 ${
               props.mode === "light" ? "bg-slate-400" : "bg-black"
             }`}
           >
-            <div className="flex items-center">
+            <div className="flex items-center w-full">
               <img
                 src={leftArrow}
                 alt="back-button"
@@ -78,16 +84,13 @@ export default function Note(props) {
                 }`}
                 onClick={() => navigate(-1)}
               />
-              <h1
-                className={`ml-3 text-3xl font-bold outline-none ${
+              <input
+                className={`ml-3 text-3xl font-bold outline-none w-full bg-transparent ${
                   props.mode === "light" ? "text-black" : "text-white"
                 }`}
-                contentEditable={true}
-                suppressContentEditableWarning={true}
-                onBlur={(event) => setTitle(event.target.innerText)}
-              >
-                {title}
-              </h1>
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+              />
             </div>
             <div className="flex">
               <img
@@ -108,15 +111,18 @@ export default function Note(props) {
               />
             </div>
           </div>
-          <div className="">
+          <div className="mt-14 mb-6 h-full">
             <textarea
               type="text"
-              className={`pt-4 px-8 text-2xl font-semibold outline-none ${
+              className={`pt-2 bg-transparent px-8 text-2xl font-semibold outline-none ${
                 props.mode === "light" ? "text-black" : "text-white"
-              } bg-transparent h-[91.1vh] w-full resize-none`}
+              } bg-transparent h-full w-full resize-none`}
               defaultValue={body}
               onBlur={(event) => setBody(event.target.value)}
             ></textarea>
+          </div>
+          <div className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-thin font-mono ${props.mode === "light" ? "bg-gray-200 text-black" : "bg-gray-900 text-white"}`}>
+            {editTime}
           </div>
         </div>
       )}
