@@ -104,34 +104,36 @@ export default function SearchResult(props) {
                 </div>
               </div>
             ) : (
-              notes.reverse().map((note) => (
+              notes.map((note) => (
                 <div
                   className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${
                     props.mode === "light" ? "bg-gray-100" : " bg-gray-700"
                   }`}
                   key={note._id}
                 >
-                  <div className="flex justify-between">
-                    <div className="">
+                  <div className="flex items-center">
+                    <div className="flex items-center w-full">
                       <input
                         type="checkbox"
-                        className="w-4 h-4"
+                        className="w-4 h-4 cursor-pointer"
                         checked={note.checked}
                         onChange={() => checkNote(note._id)}
                       />
-                      <div
-                        className={`inline ml-2 text-xl font-bold font-[serif] ${
+                      <Link to={`/note/${note._id}`} className={`w-full`}>
+                      <input
+                        className={`inline ml-1 text-xl pointer-events-none w-full bg-transparent font-bold font-[serif] ${
                           props.mode === "light" ? "text-black" : "text-white"
                         }`}
-                      >
-                        {note.title}
-                      </div>
+                        value={note.title}
+                        onChange={() => {}}
+                      />
+                      </Link>
                     </div>
                     <div>
                       <img
                         src={deleteLogo}
                         alt="delete-button"
-                        className={`inline mx-2 cursor-pointer ${
+                        className={`inline ml-3 mr-2 cursor-pointer ${
                           props.mode === "light" ? "invert-0" : "invert"
                         }`}
                         onClick={() => deleteNote(note._id)}
