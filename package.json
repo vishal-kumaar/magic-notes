@@ -1,5 +1,5 @@
 {
-  "name": "todo-app-frontend",
+  "name": "notes-app-frontend",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:4000",
