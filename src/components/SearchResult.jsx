@@ -80,7 +80,7 @@ export default function SearchResult(props) {
       <Navbar
         mode={props.mode}
         toggleMode={props.toggleMode}
-        title="Magic Note"
+        title="Magic Notes"
       />
       <div className="flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28">
         <SearchNotes
