@@ -1,4 +1,4 @@
-<a href="https://magicnotes.up.railway.app/" target="_blank">🔗 Live Link</a>
+<a href="https://magicnotes.up.railway.app/" target="_blank">🔗 Project Live Link</a>
 
 <h1 align="center">Magic Notes Frontend</h1>
 
