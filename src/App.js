@@ -14,13 +14,12 @@ import SearchResult from "./components/SearchResult";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
+  const [opacity, setOpacity] = useState("opacity-100");
 
   if (mode === "dark") {
-    document.body.classList.add("bg-gray-800");
-    document.body.classList.remove("bg-light");
+    document.body.classList = "bg-gray-800";
   } else {
-    document.body.classList.add("bg-light");
-    document.body.classList.remove("bg-gray-800");
+    document.body.classList = "bg-white";
   }
 
   const toggleMode = () => {
@@ -39,12 +38,26 @@ function App() {
         <Route
           exect
           path="/"
-          element={<Home mode={mode} toggleMode={toggleMode} />}
+          element={
+            <Home
+              mode={mode}
+              toggleMode={toggleMode}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
+          }
         ></Route>
         <Route
           exect
           path="/search"
-          element={<SearchResult mode={mode} toggleMode={toggleMode} />}
+          element={
+            <SearchResult
+              mode={mode}
+              toggleMode={toggleMode}
+              opacity={opacity}
+              setOpacity={setOpacity}
+            />
+          }
         ></Route>
         <Route
           exect

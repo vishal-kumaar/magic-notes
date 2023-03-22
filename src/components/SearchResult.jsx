@@ -11,10 +11,13 @@ import deleteData from "../utils/deleteData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
+import ConfirmDelete from "./ConfirmDelete";
 
 export default function SearchResult(props) {
   const [isLoading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteNoteId, setDeleteNoteId] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
   const queryParams = new URLSearchParams(searchParams);
 
@@ -77,12 +80,19 @@ export default function SearchResult(props) {
   return (
     <>
       <ToastContainer />
+      <ConfirmDelete
+        confirmDelete={confirmDelete}
+        setConfirmDelete={setConfirmDelete}
+        delete={() => deleteNote(deleteNoteId)}
+        mode={props.mode}
+        setOpacity={props.setOpacity}
+      />
       <Navbar
         mode={props.mode}
         toggleMode={props.toggleMode}
         title="Magic Notes"
       />
-      <div className="flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28">
+      <div className={`flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28 ${props.opacity} transition ease-in-out duration-700`}>
         <SearchNotes
           mode={props.mode}
           setSearchParams={setSearchParams}
@@ -120,13 +130,13 @@ export default function SearchResult(props) {
                         onChange={() => checkNote(note._id)}
                       />
                       <Link to={`/note/${note._id}`} className={`w-full`}>
-                      <input
-                        className={`inline ml-1 text-xl pointer-events-none w-full bg-transparent font-bold font-[serif] ${
-                          props.mode === "light" ? "text-black" : "text-white"
-                        }`}
-                        value={note.title}
-                        onChange={() => {}}
-                      />
+                        <input
+                          className={`inline ml-1 text-xl pointer-events-none w-full bg-transparent font-bold font-[serif] ${
+                            props.mode === "light" ? "text-black" : "text-white"
+                          }`}
+                          value={note.title}
+                          onChange={() => {}}
+                        />
                       </Link>
                     </div>
                     <div>
@@ -136,7 +146,11 @@ export default function SearchResult(props) {
                         className={`inline ml-3 mr-2 cursor-pointer ${
                           props.mode === "light" ? "invert-0" : "invert"
                         }`}
-                        onClick={() => deleteNote(note._id)}
+                        onClick={() => {
+                          setConfirmDelete(true);
+                          setDeleteNoteId(note._id);
+                          props.setOpacity("opacity-30");
+                        }}
                       />
                     </div>
                   </div>

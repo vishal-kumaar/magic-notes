@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import deleteLogo from "../assets/images/delete.svg";
 import notesIcon from "../assets/images/notes_icon.svg";
@@ -7,8 +7,12 @@ import deleteData from "../utils/deleteData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
+import ConfirmDelete from "./ConfirmDelete";
 
 export default function NotesList(props) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteNoteId, setDeleteNoteId] = useState(null);
+
   const checkNote = async (noteId) => {
     const res = await putData(`/api/note/checkNote/${noteId}`);
     if (res.success === false) {
@@ -39,10 +43,17 @@ export default function NotesList(props) {
   return (
     <>
       <ToastContainer />
+      <ConfirmDelete
+        confirmDelete={confirmDelete}
+        setConfirmDelete={setConfirmDelete}
+        delete={() => deleteNote(deleteNoteId)}
+        mode={props.mode}
+        setOpacity={props.setOpacity}
+      />
       {props.isLoading ? (
         <Loading height={"half"} />
       ) : (
-        <div>
+        <div className={`${props.opacity} transition ease-in-out duration-700`}>
           {props.notes === null ? (
             <div className={`flex flex-col items-center mt-28`}>
               <img
@@ -77,13 +88,13 @@ export default function NotesList(props) {
                       onChange={() => checkNote(note._id)}
                     />
                     <Link to={`/note/${note._id}`} className={`w-full`}>
-                    <input
-                      className={`inline ml-2 text-xl w-full pointer-events-none bg-transparent outline-none font-bold font-[serif] ${
-                        props.mode === "light" ? "text-black" : "text-white"
-                      }`}
-                      value={note.title}
-                      onChange={() => {}}
-                    />
+                      <input
+                        className={`inline ml-2 text-xl w-full pointer-events-none bg-transparent outline-none font-bold font-[serif] ${
+                          props.mode === "light" ? "text-black" : "text-white"
+                        }`}
+                        value={note.title}
+                        onChange={() => {}}
+                      />
                     </Link>
                   </div>
                   <div>
@@ -93,7 +104,11 @@ export default function NotesList(props) {
                       className={`inline ml-3 mr-2 cursor-pointer ${
                         props.mode === "light" ? "invert-0" : "invert"
                       }`}
-                      onClick={() => deleteNote(note._id)}
+                      onClick={() => {
+                        setConfirmDelete(true);
+                        setDeleteNoteId(note._id);
+                        props.setOpacity("opacity-30")
+                      }}
                     />
                   </div>
                 </div>
