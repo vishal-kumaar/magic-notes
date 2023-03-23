@@ -48,12 +48,11 @@ export default function NotesList(props) {
         setConfirmDelete={setConfirmDelete}
         delete={() => deleteNote(deleteNoteId)}
         mode={props.mode}
-        setOpacity={props.setOpacity}
       />
       {props.isLoading ? (
         <Loading height={"half"} />
       ) : (
-        <div className={`${props.opacity} transition ease-in-out duration-700`}>
+        <div>
           {props.notes === null ? (
             <div className={`flex flex-col items-center mt-28`}>
               <img
@@ -107,7 +106,6 @@ export default function NotesList(props) {
                       onClick={() => {
                         setConfirmDelete(true);
                         setDeleteNoteId(note._id);
-                        props.setOpacity("opacity-30")
                       }}
                     />
                   </div>

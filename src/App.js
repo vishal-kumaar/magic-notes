@@ -14,7 +14,6 @@ import SearchResult from "./components/SearchResult";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
-  const [opacity, setOpacity] = useState("opacity-100");
 
   if (mode === "dark") {
     document.body.classList = "bg-gray-800";
@@ -38,26 +37,12 @@ function App() {
         <Route
           exect
           path="/"
-          element={
-            <Home
-              mode={mode}
-              toggleMode={toggleMode}
-              opacity={opacity}
-              setOpacity={setOpacity}
-            />
-          }
+          element={<Home mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route
           exect
           path="/search"
-          element={
-            <SearchResult
-              mode={mode}
-              toggleMode={toggleMode}
-              opacity={opacity}
-              setOpacity={setOpacity}
-            />
-          }
+          element={<SearchResult mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route
           exect
