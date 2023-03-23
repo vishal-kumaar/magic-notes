@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/images/logo.png";
-import colorMode from "../assets/images/color_mode.png";
+import lightMode from "../assets/images/light_mode.svg";
+import darkMode from "../assets/images/dark_mode.svg";
 import userProfile from "../assets/images/user_profile.svg";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -22,7 +23,7 @@ export default function Navbar(props) {
       <div className="flex items-center text-white justify-between">
         <div className="mx-2">
           <img
-            src={colorMode}
+            src={props.mode === "dark" ? lightMode : darkMode}
             alt="color-mode"
             className="invert w-6 h-6 cursor-pointer"
             onClick={props.toggleMode}

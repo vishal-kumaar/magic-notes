@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import leftArrow from "../assets/images/left_arrow.svg";
 import saveLogo from "../assets/images/save.svg";
-import colorMode from "../assets/images/color_mode.png";
+import lightMode from "../assets/images/light_mode.svg";
+import darkMode from "../assets/images/dark_mode.svg";
 import { useParams, useNavigate } from "react-router-dom";
 import putData from "../utils/putData";
 import getData from "../utils/getData";
@@ -94,7 +95,7 @@ export default function Note(props) {
             </div>
             <div className="flex">
               <img
-                src={colorMode}
+                src={props.mode === "dark" ? lightMode : darkMode}
                 alt="color-mode"
                 className={`w-7 h-7 mx-2 cursor-pointer ${
                   props.mode === "light" ? "invert-0" : "invert"
