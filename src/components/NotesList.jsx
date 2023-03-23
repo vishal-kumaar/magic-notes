@@ -7,10 +7,10 @@ import deleteData from "../utils/deleteData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
-import ConfirmDelete from "./ConfirmDelete";
+import ConfirmAlert from "./ConfirmAlert";
 
 export default function NotesList(props) {
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmAlert, setConfirmAlert] = useState(false);
   const [deleteNoteId, setDeleteNoteId] = useState(null);
 
   const checkNote = async (noteId) => {
@@ -24,8 +24,8 @@ export default function NotesList(props) {
     }
   };
 
-  const deleteNote = async (noteId) => {
-    const res = await deleteData(`/api/note/deleteNote/${noteId}`);
+  const deleteNote = async () => {
+    const res = await deleteData(`/api/note/deleteNote/${deleteNoteId}`);
     if (res.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
@@ -38,16 +38,27 @@ export default function NotesList(props) {
         type: "success",
         autoClose: 2000,
       });
+      setDeleteNoteId(null);
     }
   };
   return (
     <>
       <ToastContainer />
-      <ConfirmDelete
-        confirmDelete={confirmDelete}
-        setConfirmDelete={setConfirmDelete}
-        delete={() => deleteNote(deleteNoteId)}
+      <ConfirmAlert
+        confirmAlert={confirmAlert}
+        setConfirmAlert={setConfirmAlert}
+        type="warning"
+        title="Are you sure?"
+        subtitle="You won't be able to revert this!"
         mode={props.mode}
+        button1={{
+          name: "Yes, delete it!",
+          callback: deleteNote,
+        }}
+        button2={{
+          name: "Cancel",
+          callback: () => setDeleteNoteId(null),
+        }}
       />
       {props.isLoading ? (
         <Loading height={"half"} />
@@ -104,7 +115,7 @@ export default function NotesList(props) {
                         props.mode === "light" ? "invert-0" : "invert"
                       }`}
                       onClick={() => {
-                        setConfirmDelete(true);
+                        setConfirmAlert(true);
                         setDeleteNoteId(note._id);
                       }}
                     />

@@ -11,12 +11,12 @@ import deleteData from "../utils/deleteData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
-import ConfirmDelete from "./ConfirmDelete";
+import ConfirmAlert from "./ConfirmAlert";
 
 export default function SearchResult(props) {
   const [isLoading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmAlert, setConfirmAlert] = useState(false);
   const [deleteNoteId, setDeleteNoteId] = useState(null);
   let [searchParams, setSearchParams] = useSearchParams();
   const queryParams = new URLSearchParams(searchParams);
@@ -47,8 +47,8 @@ export default function SearchResult(props) {
     }
   };
 
-  const deleteNote = async (noteId) => {
-    const res = await deleteData(`/api/note/deleteNote/${noteId}`);
+  const deleteNote = async () => {
+    const res = await deleteData(`/api/note/deleteNote/${deleteNoteId}`);
     if (res.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
@@ -66,6 +66,7 @@ export default function SearchResult(props) {
           return note && note._id !== res.note._id;
         })
       );
+      setDeleteNoteId(null);
     }
   };
 
@@ -80,11 +81,21 @@ export default function SearchResult(props) {
   return (
     <>
       <ToastContainer />
-      <ConfirmDelete
-        confirmDelete={confirmDelete}
-        setConfirmDelete={setConfirmDelete}
-        delete={() => deleteNote(deleteNoteId)}
+      <ConfirmAlert
+        confirmAlert={confirmAlert}
+        setConfirmAlert={setConfirmAlert}
+        type="warning"
+        title="Are you sure?"
+        subtitle="You won't be able to revert this!"
         mode={props.mode}
+        button1={{
+          name: "Yes, delete it!",
+          callback: deleteNote,
+        }}
+        button2={{
+          name: "Cancel",
+          callback: () => setDeleteNoteId(null),
+        }}
       />
       <Navbar
         mode={props.mode}
@@ -148,7 +159,7 @@ export default function SearchResult(props) {
                           props.mode === "light" ? "invert-0" : "invert"
                         }`}
                         onClick={() => {
-                          setConfirmDelete(true);
+                          setConfirmAlert(true);
                           setDeleteNoteId(note._id);
                         }}
                       />
