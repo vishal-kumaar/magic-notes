@@ -13,10 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import homeIcon from "../assets/images/home_icon.svg";
+import ConfirmAlert from "./ConfirmAlert";
 
 export default function UserProfile(props) {
   const [isLoading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
+  const [confirmAlert, setConfirmAlert] = useState(false);
   const navigate = useNavigate();
 
   const getProfile = async () => {
@@ -53,6 +55,20 @@ export default function UserProfile(props) {
   return (
     <>
       <ToastContainer />
+      <ConfirmAlert
+        confirmAlert={confirmAlert}
+        setConfirmAlert={setConfirmAlert}
+        title="Confirm logout"
+        subtitle="Are you sure you want to log out?"
+        mode={props.mode}
+        button1={{
+          name: "Yes, log out!",
+          callback: logout,
+        }}
+        button2={{
+          name: "Cancel",
+        }}
+      />
       {isLoading ? (
         <Loading />
       ) : (
@@ -158,7 +174,7 @@ export default function UserProfile(props) {
               </Link>
               <div
                 className={`${userData ? "block" : "hidden"} cursor-pointer`}
-                onClick={logout}
+                onClick={() => setConfirmAlert(true)}
               >
                 <div
                   className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
