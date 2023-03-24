@@ -11,6 +11,7 @@ export default function Login(props) {
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
   const navigate = useNavigate();
 
   const login = async () => {
@@ -96,7 +97,7 @@ export default function Login(props) {
             </div>
             <div className="my-6">
               <input
-                type="password"
+                type={passwordType}
                 placeholder="Password"
                 className={`w-full border-2 py-3 px-6 font-lg outline-none rounded-3xl shadow-md ${
                   props.mode === "light"
@@ -109,13 +110,21 @@ export default function Login(props) {
             </div>
             <div className="my-6 mx-1 flex justify-between">
               <div className="flex items-center">
-                <input type="checkbox" className="mr-2" />
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  onChange={(event) => {
+                    event.target.checked
+                      ? setPasswordType("text")
+                      : setPasswordType("password");
+                  }}
+                />
                 <p
                   className={
                     props.mode === "light" ? "text-black" : "text-gray-300"
                   }
                 >
-                  Remember Me
+                  Show Password
                 </p>
               </div>
               <div className={`text-gray-400 font-normal`}>
