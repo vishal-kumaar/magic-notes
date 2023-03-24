@@ -1,5 +1,4 @@
 import React from "react";
-import warningIcon from "../assets/images/warning.svg";
 
 export default function ConfirmAlert(props) {
   return (
@@ -15,37 +14,35 @@ export default function ConfirmAlert(props) {
         } transition ease-in-out duration-700`}
       >
         <div
-          className={`bg-white shadow-2xl text-center px-10 py-5 rounded-lg ${
+          className={`bg-white shadow-2xl px-10 py-8 rounded-lg ${
             props.mode === "dark"
               ? "bg-gray-700 text-white"
               : "bg-white text-black"
           }`}
         >
-          <img
-            src={warningIcon}
-            alt="warning-icon"
-            className="w-20 inline mb-3"
-          />
-          <h1 className="font-bold text-xl mb-1">{props.title}</h1>
-          <p className="text-sm font-normal mb-5">{props.subtitle}</p>
+          <h1 className="font-bold text-2xl mb-3">{props.title}</h1>
+          <hr />
+          <p className="text-base font-medium mt-3 mb-14">{props.subtitle}</p>
+          <div className="text-right">
           <button
-            className="bg-blue-500 text-white text-sm px-6 py-1 rounded mx-1"
+            className="font-bold border border-gray-400 text-base px-4 py-1 rounded-3xl"
             onClick={() => {
               props.setConfirmAlert(false);
-              props.button1.callback && props.button1.callback();
+              props.callback2 && props.callback2();
             }}
           >
-            {props.button1.name}
+            Cancal
           </button>
           <button
-            className="bg-red-500 text-white text-sm px-6 py-1 rounded mx-1"
+            className="bg-green-700 text-white font-medium border border-green-700 text-base px-7 py-1 rounded-3xl ml-4"
             onClick={() => {
               props.setConfirmAlert(false);
-              props.button2.callback && props.button2.callback();
+              props.callback1 && props.callback1();
             }}
           >
-            {props.button2.name}
+            OK
           </button>
+          </div>
         </div>
       </div>
     </>

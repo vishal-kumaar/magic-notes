@@ -84,18 +84,11 @@ export default function SearchResult(props) {
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
-        type="warning"
-        title="Are you sure?"
-        subtitle="You won't be able to revert this!"
+        title="Confirm delete"
+        subtitle="Are you sure you want delete this?"
         mode={props.mode}
-        button1={{
-          name: "Yes, delete it!",
-          callback: deleteNote,
-        }}
-        button2={{
-          name: "Cancel",
-          callback: () => setDeleteNoteId(null),
-        }}
+        callback1 = {deleteNote}
+        callback2 = {() => setDeleteNoteId(null)}
       />
       <Navbar
         mode={props.mode}
