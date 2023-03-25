@@ -33,6 +33,8 @@ export default function Note(props) {
         type: "success",
         autoClose: 1500,
       });
+      const date = new Date(res.note.updatedAt);
+      setEditTime(editDate(date));
     } else {
       toast(res.message, {
         theme: props.mode,
@@ -47,15 +49,18 @@ export default function Note(props) {
     const res = await getData(`/api/note/getNote/${noteId}`);
     if (res.success === true) {
       const date = new Date(res.note.updatedAt);
-      const editDate = `Edited on ${date.toLocaleString("default", { month: "short" })} ${date.getDate()}, ${date.getFullYear()} ${("0" + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours())).slice(-2)}:${("0" + date.getMinutes()).slice(-2)} ${date.getHours() >= 12 ? "PM" : "AM"}`;
 
       setTitle(res.note.title);
       setBody(res.note.body);
-      setEditTime(editDate);
+      setEditTime(editDate(date));
     }
 
     setLoading(false);
   };
+
+  const editDate = (date) => {
+    return `Edited on ${date.toLocaleString("default", { month: "short" })} ${date.getDate()}, ${date.getFullYear()} ${("0" + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours())).slice(-2)}:${("0" + date.getMinutes()).slice(-2)} ${date.getHours() >= 12 ? "PM" : "AM"}`;
+  }
 
   useEffect(
     () => {
