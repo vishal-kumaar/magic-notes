@@ -14,7 +14,7 @@ export default function ConfirmAlert(props) {
         } transition ease-in-out duration-700`}
       >
         <div
-          className={`bg-white shadow-2xl px-10 py-8 rounded-lg ${
+          className={`bg-white shadow-2xl mx-4 px-10 py-8 rounded-lg ${
             props.mode === "dark"
               ? "bg-gray-700 text-white"
               : "bg-white text-black"
@@ -25,22 +25,22 @@ export default function ConfirmAlert(props) {
           <p className="text-base font-medium mt-3 mb-14">{props.subtitle}</p>
           <div className="text-right">
           <button
-            className="font-bold border border-gray-400 text-base px-4 py-1 rounded-3xl"
+            className="font-bold border border-gray-400 text-base px-5 py-1 rounded-3xl"
             onClick={() => {
               props.setConfirmAlert(false);
-              props.callback2 && props.callback2();
+              props.button2.callback && props.button2.callback();
             }}
           >
-            Cancal
+            {props.button2 && props.button2.name}
           </button>
           <button
-            className="bg-green-700 text-white font-medium border border-green-700 text-base px-7 py-1 rounded-3xl ml-4"
+            className="bg-green-700 text-white font-medium border border-green-700 text-base px-5 py-1 rounded-3xl ml-4"
             onClick={() => {
               props.setConfirmAlert(false);
-              props.callback1 && props.callback1();
+              props.button1.callback && props.button1.callback();
             }}
           >
-            OK
+            {props.button1 && props.button1.name}
           </button>
           </div>
         </div>

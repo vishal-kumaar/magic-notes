@@ -61,7 +61,13 @@ export default function UserProfile(props) {
         title="Confirm logout"
         subtitle="Are you sure you want to log out?"
         mode={props.mode}
-        callback1={logout}
+        button1={{
+          name: "Logout",
+          callback: logout
+        }}
+        button2={{
+          name: "Cancel"
+        }}
       />
       {isLoading ? (
         <Loading />

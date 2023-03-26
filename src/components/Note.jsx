@@ -8,12 +8,14 @@ import putData from "../utils/putData";
 import getData from "../utils/getData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "../components/Loading";
+import Loading from "./Loading";
+import ConfirmAlert from "./ConfirmAlert";
 
 export default function Note(props) {
   const [isLoading, setLoading] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  const [confirmAlert, setConfirmAlert] = useState(false);
   const [editTime, setEditTime] = useState();
   const { noteId } = useParams();
   const navigate = useNavigate();
@@ -59,8 +61,30 @@ export default function Note(props) {
   };
 
   const editDate = (date) => {
-    return `Edited on ${date.toLocaleString("default", { month: "short" })} ${date.getDate()}, ${date.getFullYear()} ${("0" + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours())).slice(-2)}:${("0" + date.getMinutes()).slice(-2)} ${date.getHours() >= 12 ? "PM" : "AM"}`;
-  }
+    return `Edited on ${date.toLocaleString("default", {
+      month: "short",
+    })} ${date.getDate()}, ${date.getFullYear()} ${(
+      "0" + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours())
+    ).slice(-2)}:${("0" + date.getMinutes()).slice(-2)} ${
+      date.getHours() >= 12 ? "PM" : "AM"
+    }`;
+  };
+
+  const handleBack = async () => {
+    const res = await getData(`/api/note/getNote/${noteId}`);
+    let saved = true;
+    if (res.success === true) {
+      if (res.note.title !== title || res.note.body !== body) {
+        saved = false;
+      }
+    }
+
+    if (saved) {
+      navigate(-1);
+    } else {
+      setConfirmAlert(true);
+    }
+  };
 
   useEffect(
     () => {
@@ -72,6 +96,24 @@ export default function Note(props) {
   return (
     <>
       <ToastContainer />
+      <ConfirmAlert
+        confirmAlert={confirmAlert}
+        setConfirmAlert={setConfirmAlert}
+        title="Unsaved changes"
+        subtitle="Are you sure you want to discard this changes? Your changes will be lost forever."
+        mode={props.mode}
+        button1={{
+          name: "Save",
+          callback: () => {
+            editNote();
+            navigate(-1);
+          }
+        }}
+        button2={{
+          name: "Exit",
+          callback: () => navigate(-1)
+        }}
+        />
       {isLoading ? (
         <Loading />
       ) : (
@@ -88,7 +130,7 @@ export default function Note(props) {
                 className={`w-6 cursor-pointer ${
                   props.mode === "light" ? "invert-0" : "invert"
                 }`}
-                onClick={() => navigate(-1)}
+                onClick={handleBack}
               />
               <input
                 className={`ml-3 text-3xl font-bold outline-none w-full bg-transparent ${
@@ -127,7 +169,13 @@ export default function Note(props) {
               onBlur={(event) => setBody(event.target.value)}
             ></textarea>
           </div>
-          <div className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-thin font-mono ${props.mode === "light" ? "bg-gray-200 text-black" : "bg-gray-900 text-white"}`}>
+          <div
+            className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-thin font-mono ${
+              props.mode === "light"
+                ? "bg-gray-200 text-black"
+                : "bg-gray-900 text-white"
+            }`}
+          >
             {editTime}
           </div>
         </div>

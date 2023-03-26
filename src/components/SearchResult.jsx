@@ -87,8 +87,14 @@ export default function SearchResult(props) {
         title="Confirm delete"
         subtitle="Are you sure you want delete this?"
         mode={props.mode}
-        callback1 = {deleteNote}
-        callback2 = {() => setDeleteNoteId(null)}
+        button1={{
+          name: "Delete",
+          callback: deleteNote
+        }}
+        button2={{
+          name: "Cancel",
+          callback: () => () => setDeleteNoteId(null)
+        }}
       />
       <Navbar
         mode={props.mode}
