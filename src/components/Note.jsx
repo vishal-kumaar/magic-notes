@@ -107,13 +107,13 @@ export default function Note(props) {
           callback: () => {
             editNote();
             navigate(-1);
-          }
+          },
         }}
         button2={{
           name: "Exit",
-          callback: () => navigate(-1)
+          callback: () => navigate(-1),
         }}
-        />
+      />
       {isLoading ? (
         <Loading />
       ) : (
@@ -134,10 +134,13 @@ export default function Note(props) {
               />
               <input
                 className={`ml-3 text-3xl font-bold outline-none w-full bg-transparent ${
-                  props.mode === "light" ? "text-black" : "text-white"
+                  props.mode === "light"
+                    ? "text-black placeholder:text-black/60"
+                    : "text-white placeholder:text-white/60"
                 }`}
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
+                placeholder="Edit title"
               />
             </div>
             <div className="flex">
@@ -161,12 +164,14 @@ export default function Note(props) {
           </div>
           <div className="mt-14 mb-6 h-full">
             <textarea
-              type="text"
-              className={`pt-2 bg-transparent px-8 text-2xl font-semibold outline-none ${
-                props.mode === "light" ? "text-black" : "text-white"
+              className={`pt-2 bg-transparent px-11 text-2xl font-semibold outline-none ${
+                props.mode === "light"
+                  ? "text-black placeholder:text-black/60"
+                  : "text-white placeholder:text-white/60"
               } bg-transparent h-full w-full resize-none`}
               defaultValue={body}
-              onBlur={(event) => setBody(event.target.value)}
+              onChange={(event) => setBody(event.target.value)}
+              placeholder="Edit body"
             ></textarea>
           </div>
           <div

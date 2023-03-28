@@ -4,7 +4,7 @@ export default function ConfirmAlert(props) {
   return (
     <>
       <div
-        className={`w-full h-screen absolute top-0 left-0 z-40 bg-black/70 ${
+        className={`w-full h-screen fixed top-0 left-0 z-40 bg-black/70 ${
           props.confirmAlert ? "translate-y-0" : "-translate-y-full"
         }`}
       ></div>

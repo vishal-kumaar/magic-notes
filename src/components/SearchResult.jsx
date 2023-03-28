@@ -145,7 +145,7 @@ export default function SearchResult(props) {
                           className={`inline ml-1 text-xl pointer-events-none w-full bg-transparent font-bold font-[serif] ${
                             props.mode === "light" ? "text-black" : "text-white"
                           }`}
-                          value={note.title}
+                          value={note.title ? note.title : "Unnamed title"}
                           onChange={() => {}}
                         />
                       </Link>

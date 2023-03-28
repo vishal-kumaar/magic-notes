@@ -11,6 +11,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import VerifyEmail from "./components/VerifyEmail";
 import SearchResult from "./components/SearchResult";
+import CreateNote from "./components/CreateNote";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
@@ -48,6 +49,11 @@ function App() {
           exect
           path="/note/:noteId"
           element={<Note mode={mode} toggleMode={toggleMode} />}
+        ></Route>
+        <Route
+          exect
+          path="/note"
+          element={<CreateNote mode={mode} toggleMode={toggleMode} />}
         ></Route>
         <Route
           exect
