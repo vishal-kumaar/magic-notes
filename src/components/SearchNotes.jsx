@@ -20,7 +20,7 @@ export default function SearchNotes(props) {
         <input
           type="text"
           placeholder="Search..."
-          className={`outline-none w-full p-1 text-lg font-mono  bg-transparent ${
+          className={`outline-none w-full p-1 text-lg font-serif bg-transparent ${
             props.mode === "light"
               ? " text-gray-500 placeholder:text-gray-500"
               : "text-white placeholder:text-white"

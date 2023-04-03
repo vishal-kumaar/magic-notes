@@ -101,7 +101,7 @@ export default function NotesList(props) {
                         className={`inline ml-2 text-xl w-full pointer-events-none bg-transparent outline-none font-bold font-[serif] ${
                           props.mode === "light" ? "text-black" : "text-white"
                         }`}
-                        value={note.title ? note.title : "Unnamed title"}
+                        value={note.title}
                         onChange={() => {}}
                       />
                     </Link>

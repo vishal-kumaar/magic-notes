@@ -140,7 +140,7 @@ export default function Note(props) {
                 }`}
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                placeholder="Edit title"
+                placeholder="Title"
               />
             </div>
             <div className="flex">
@@ -171,7 +171,7 @@ export default function Note(props) {
               } bg-transparent h-full w-full resize-none`}
               defaultValue={body}
               onChange={(event) => setBody(event.target.value)}
-              placeholder="Edit body"
+              placeholder="Note"
             ></textarea>
           </div>
           <div
