@@ -4,9 +4,7 @@ const createNote = async (title, token) => {
   try {
     const res = await axios.post(
       `${REACT_APP_BASE_URL}/api/note/createNote`,
-      {
-        title,
-      },
+      title,
       {
         headers: {
           Authorization: token,
