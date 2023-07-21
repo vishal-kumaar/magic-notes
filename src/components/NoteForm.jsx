@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import postData from "../utils/postData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import createNote from "../apis/createNote";
+import TokenContext from "../token/TokenContext";
 
 export default function NoteForm(props) {
+  const {token} = useContext(TokenContext);
   const [title, setTitle] = useState("");
 
-  const createNote = async () => {
-    const res = await postData("/api/note/createNote", { title });
-    if (res.success === true) {
+  const handleCreateNote = async () => {
+    const res = await createNote(title, token);
+    if (res.success) {
       toast("Note created successfully", {
         theme: props.mode,
         type: "success",
@@ -17,18 +18,16 @@ export default function NoteForm(props) {
 
       setTitle("");
 
-      if (props.notes === null){
+      if (props.notes === null) {
         props.setNotes([res.note]);
       }
-    }
-    else if (res.message === "Not authorized to access this route") {
+    } else if (res.message === "Not authorized to access this route") {
       toast("Please login to access this", {
         theme: props.mode,
         type: "warning",
         autoClose: 2000,
       });
-    } 
-    else {
+    } else {
       toast("Something went wrong", {
         theme: props.mode,
         type: "error",
@@ -39,17 +38,15 @@ export default function NoteForm(props) {
 
   const handleForm = (event) => {
     event.preventDefault();
-    createNote();
+    handleCreateNote();
   };
   return (
     <div className={props.visible}>
-      <ToastContainer />
       <form
         className={`flex items-center justify-between border-2 p-2 rounded-xl border-gray-400 mt-4 ${
           props.mode === "light" ? "bg-white" : "bg-gray-900"
         }`}
-        onSubmit={handleForm}
-      >
+        onSubmit={handleForm}>
         <div className="w-full">
           <input
             type="text"
@@ -66,8 +63,7 @@ export default function NoteForm(props) {
         <div className="">
           <button
             type="submit"
-            className="px-3 py-1 text-lg bg-blue-600 text-white rounded font-mono"
-          >
+            className="px-3 py-1 text-lg bg-blue-600 text-white rounded font-mono">
             Create
           </button>
         </div>

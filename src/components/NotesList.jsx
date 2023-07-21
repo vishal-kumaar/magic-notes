@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import deleteLogo from "../assets/images/delete.svg";
 import notesIcon from "../assets/images/notes_icon.svg";
-import putData from "../utils/putData";
-import deleteData from "../utils/deleteData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import Loading from "./Loading";
 import ConfirmAlert from "./ConfirmAlert";
+import checkNote from "../apis/checkNote";
+import deleteNote from "../apis/deleteNote";
+import TokenContext from "../token/TokenContext";
 
 export default function NotesList(props) {
+  const {token} = useContext(TokenContext);
   const [confirmAlert, setConfirmAlert] = useState(false);
   const [deleteNoteId, setDeleteNoteId] = useState(null);
 
-  const checkNote = async (noteId) => {
-    const res = await putData(`/api/note/checkNote/${noteId}`);
-    if (res.success === false) {
+  const handleCheckNote = async (noteId) => {
+    const res = await checkNote(noteId, token);
+    if (res.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "warning",
@@ -24,9 +25,9 @@ export default function NotesList(props) {
     }
   };
 
-  const deleteNote = async () => {
-    const res = await deleteData(`/api/note/deleteNote/${deleteNoteId}`);
-    if (res.success === false) {
+  const handleDeleteNote = async () => {
+    const res = await deleteNote(deleteNoteId, token);
+    if (res.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "error",
@@ -43,7 +44,6 @@ export default function NotesList(props) {
   };
   return (
     <>
-      <ToastContainer />
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
@@ -52,7 +52,7 @@ export default function NotesList(props) {
         mode={props.mode}
         button1={{
           name: "Delete",
-          callback: deleteNote
+          callback: handleDeleteNote
         }}
         button2={{
           name: "Cancel",
@@ -94,7 +94,7 @@ export default function NotesList(props) {
                       type="checkbox"
                       className="w-4 h-4 cursor-pointer"
                       checked={note.checked}
-                      onChange={() => checkNote(note._id)}
+                      onChange={() => handleCheckNote(note._id)}
                     />
                     <Link to={`/note/${note._id}`} className={`w-full`}>
                       <input

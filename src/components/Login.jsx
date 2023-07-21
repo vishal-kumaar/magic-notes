@@ -1,36 +1,37 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
-import postData from "../utils/postData";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../components/Loading";
 import homeIcon from "../assets/images/home_icon.svg";
+import login from "../apis/login";
+import TokenContext from "../token/TokenContext";
 
 export default function Login(props) {
+  const { setUserToken } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const navigate = useNavigate();
 
-  const login = async () => {
+  const handleForm = async (event) => {
+    event.preventDefault();
     setLoading(true);
-    const res = await postData("/api/auth/login", {
+    const res = await login({
       email: email,
       password: password,
     });
 
-    if (res.success === true) {
+    if (res.success) {
       toast("Login successfull", {
         theme: props.mode,
         type: "success",
         autoClose: 1500,
       });
-
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      setUserToken(res.token);
+      navigate("/");
     } else {
       toast(res.message, {
         type: "error",
@@ -41,14 +42,8 @@ export default function Login(props) {
     setLoading(false);
   };
 
-  const handleForm = async (event) => {
-    event.preventDefault();
-    login();
-  };
-
   return (
     <>
-      <ToastContainer />
       {isLoading ? (
         <Loading />
       ) : (
@@ -73,13 +68,11 @@ export default function Login(props) {
           </div>
           <form
             className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"
-            onSubmit={handleForm}
-          >
+            onSubmit={handleForm}>
             <div
               className={`font-extrabold text-2xl mb-7 text-center ${
                 props.mode === "light" ? "text-black" : "text-white"
-              }`}
-            >
+              }`}>
               Log In
             </div>
             <div className="my-6">
@@ -122,8 +115,7 @@ export default function Login(props) {
                 <p
                   className={
                     props.mode === "light" ? "text-black" : "text-gray-300"
-                  }
-                >
+                  }>
                   Show Password
                 </p>
               </div>
@@ -134,8 +126,7 @@ export default function Login(props) {
             <div className="my-6">
               <button
                 type="submit"
-                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}
-              >
+                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}>
                 Login
               </button>
             </div>

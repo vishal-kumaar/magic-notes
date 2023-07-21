@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import NoteForm from "./NoteForm";
 import Navbar from "./Navbar";
 import SearchNotes from "./SearchNotes";
 import Footer from "./Footer";
-import getData from "../utils/getData";
 import NotesList from "./NotesList";
 import { Link } from "react-router-dom";
+import getUserProfile from "../apis/getUserProfile";
+import getAllNotes from "../apis/getAllNotes";
+import TokenContext from "../token/TokenContext";
 
 export default function Home(props) {
+  const { token, removeUserToken } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(true);
   const [formVisibility, setFormVisibility] = useState("hidden");
   const [notes, setNotes] = useState(null);
   const navigate = useNavigate();
 
   const isLoggedIn = async () => {
-    const res = await getData("/api/auth/profile");
-    if (res.success === false) {
+    const res = await getUserProfile(token);
+    if (!res.success) {
       setTimeout(() => {
+        removeUserToken();
         navigate("/login");
       }, 2000);
     }
   };
 
-  const getNotes = async () => {
-    const res = await getData("/api/note/getNotes");
-    if (res.success === true) {
+  const handleNotes = async () => {
+    const res = await getAllNotes(token);
+    if (res.success) {
       setNotes(res.notes);
     } else {
       setNotes(null);
@@ -41,9 +45,13 @@ export default function Home(props) {
     []
   );
 
-  useEffect(() => {
-    getNotes();
-  }, [notes]);
+  useEffect(
+    () => {
+      handleNotes();
+    },
+    // eslint-disable-next-line
+    [notes]
+  );
 
   return (
     <>
@@ -61,8 +69,7 @@ export default function Home(props) {
             <h1
               className={`font-extrabold font-sans text-3xl ${
                 props.mode === "light" ? "text-black" : "text-white"
-              }`}
-            >
+              }`}>
               All Notes
             </h1>
             <button
@@ -73,8 +80,7 @@ export default function Home(props) {
                 } else {
                   setFormVisibility("hidden");
                 }
-              }}
-            >
+              }}>
               {formVisibility === "hidden" ? "Create New Note" : "Done"}
             </button>
           </div>
@@ -86,11 +92,7 @@ export default function Home(props) {
           setNotes={setNotes}
           notes={notes}
         />
-        <NotesList
-          mode={props.mode}
-          notes={notes}
-          isLoading={isLoading}
-        />
+        <NotesList mode={props.mode} notes={notes} isLoading={isLoading} />
       </div>
       <Footer mode={props.mode} />
     </>

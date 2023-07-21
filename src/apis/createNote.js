@@ -3,7 +3,7 @@ import axios from "axios";
 const createNote = async (title, token) => {
   try {
     const res = await axios.post(
-      `${REACT_APP_BASE_URL}/api/note/createNote`,
+      `${process.env.REACT_APP_BASE_URL}/api/note/createNote`,
       { title },
       {
         headers: {

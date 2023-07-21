@@ -14,8 +14,7 @@ export default function SearchNotes(props) {
       onSubmit={handleForm}
       className={`flex items-center justify-between border-2 p-2 rounded-xl border-gray-400 ${
         props.mode === "light" ? "bg-white" : "bg-gray-900"
-      }`}
-    >
+      }`}>
       <div className="w-full">
         <input
           type="text"

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import putData from "../utils/putData";
 import Loading from "../components/Loading";
+import { toast } from "react-toastify";
+import verifyUser from "../apis/verifyUser";
 
 export default function VerifyEmail(props) {
   const [isLoading, setLoading] = useState(false);
@@ -12,17 +12,15 @@ export default function VerifyEmail(props) {
 
   const verify = async () => {
     setLoading(true);
-    const res = await putData(`/api/auth/user/verify/${userId}`, { otp: OTP });
-    if (res.success === true) {
+    const res = await verifyUser(userId, OTP);
+    if (res.success) {
       toast("Email Verification Successful", {
         type: "success",
         mode: props.mode,
         autoClose: 1500,
       });
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
+      navigate("/login");
     } else {
       toast(res.message, {
         type: "error",
@@ -39,20 +37,17 @@ export default function VerifyEmail(props) {
   };
   return (
     <>
-      <ToastContainer />
       {isLoading ? (
         <Loading />
       ) : (
         <div className="mt-40">
           <form
             className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-10"
-            onSubmit={handleForm}
-          >
+            onSubmit={handleForm}>
             <div
               className={`font-extrabold text-2xl mb-7 text-center ${
                 props.mode === "light" ? "text-black" : "text-white"
-              }`}
-            >
+              }`}>
               Verify Email
             </div>
             <div className="my-6">
@@ -73,8 +68,7 @@ export default function VerifyEmail(props) {
             <div className="my-6">
               <button
                 type="submit"
-                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}
-              >
+                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}>
                 Verify
               </button>
             </div>
@@ -82,15 +76,13 @@ export default function VerifyEmail(props) {
           <div
             className={`text-center font-semibold font-sans text-lg ${
               props.mode === "light" ? "text-black" : "text-white"
-            }`}
-          >
+            }`}>
             Open your mail you have received an OTP{" "}
             <a
               href="https://mail.google.com/mail"
               target="_blank"
               rel="noreferrer"
-              className={`text-blue-600`}
-            >
+              className={`text-blue-600`}>
               click here
             </a>
             .

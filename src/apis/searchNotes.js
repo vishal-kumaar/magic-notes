@@ -3,7 +3,7 @@ import axios from "axios";
 const searchNotes = async (input, token) => {
   try {
     const res = await axios.get(
-      `${REACT_APP_BASE_URL}/api/note/search?input=${input}`,
+      `${process.env.REACT_APP_BASE_URL}/api/note/search?input=${input}`,
       {
         headers: {
           Authorization: token,

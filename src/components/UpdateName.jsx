@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
-import putData from "../utils/putData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Loading from "../components/Loading";
 import homeIcon from "../assets/images/home_icon.svg";
+import updateUserName from "../apis/updateUserName";
+import { toast } from "react-toastify";
+import TokenContext from "../token/TokenContext";
 
 export default function UpdateName(props) {
+  const { token } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(false);
   const [newName, setNewName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  const updateName = async () => {
+  const handleUpdateName = async () => {
     setLoading(true);
     const data = {
       newName,
       password,
     };
-    const res = await putData(`/api/auth/username/update/${userId}`, data);
-    if (res.success === true) {
+    const res = await updateUserName(userId, data, token);
+    if (res.success) {
       toast("Name successfully updated", {
         theme: props.mode,
         type: "success",
         autoClose: 1500,
       });
 
-      setTimeout(() => {
-        navigate("/profile");
-      }, 2000);
+      navigate("/profile");
     } else {
       toast(res.message, {
         type: "error",
@@ -43,12 +42,11 @@ export default function UpdateName(props) {
 
   const handleForm = (event) => {
     event.preventDefault();
-    updateName();
+    handleUpdateName();
   };
 
   return (
     <>
-      <ToastContainer />
       {isLoading ? (
         <Loading />
       ) : (
@@ -73,13 +71,11 @@ export default function UpdateName(props) {
           </div>
           <form
             className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-28"
-            onSubmit={handleForm}
-          >
+            onSubmit={handleForm}>
             <div
               className={`font-extrabold text-2xl mb-7 text-center ${
                 props.mode === "light" ? "text-black" : "text-white"
-              }`}
-            >
+              }`}>
               Update Username
             </div>
             <div className="my-6">
@@ -115,8 +111,7 @@ export default function UpdateName(props) {
             <div className="my-6">
               <button
                 type="submit"
-                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}
-              >
+                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}>
                 Update
               </button>
             </div>

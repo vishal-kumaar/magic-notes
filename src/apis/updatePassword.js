@@ -3,7 +3,7 @@ import axios from "axios";
 const updatePassword = async (userId, data, token) => {
   try {
     const res = await axios.put(
-      `${REACT_APP_BASE_URL}/api/auth/password/update/${userId}`,
+      `${process.env.REACT_APP_BASE_URL}/api/auth/password/update/${userId}`,
       data,
       {
         headers: {

@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import SearchNotes from "./SearchNotes";
 import Footer from "./Footer";
 import deleteLogo from "../assets/images/delete.svg";
 import notFound from "../assets/images/not_found.svg";
-import getData from "../utils/getData";
-import putData from "../utils/putData";
-import deleteData from "../utils/deleteData";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
 import ConfirmAlert from "./ConfirmAlert";
+import { toast } from "react-toastify";
+import searchNotes from "../apis/searchNotes";
+import checkNote from "../apis/checkNote";
+import deleteNote from "../apis/deleteNote";
+import TokenContext from "../token/TokenContext";
 
 export default function SearchResult(props) {
+  const { token } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
   const [confirmAlert, setConfirmAlert] = useState(false);
@@ -21,10 +23,10 @@ export default function SearchResult(props) {
   let [searchParams, setSearchParams] = useSearchParams();
   const queryParams = new URLSearchParams(searchParams);
 
-  const searchNotes = async () => {
+  const handleSearchNotes = async () => {
     const input = queryParams.get("input");
-    const res = await getData(`/api/note/search?input=${input}`);
-    if (res.success === true) {
+    const res = await searchNotes(input, token);
+    if (res.success) {
       setNotes(res.notes);
     } else {
       if (notes === null) {
@@ -36,9 +38,9 @@ export default function SearchResult(props) {
     setLoading(false);
   };
 
-  const checkNote = async (noteId) => {
-    const res = await putData(`/api/note/checkNote/${noteId}`);
-    if (res.success === false) {
+  const handleCheckNote = async (noteId) => {
+    const res = await checkNote(noteId, token);
+    if (res.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "warning",
@@ -47,8 +49,8 @@ export default function SearchResult(props) {
     }
   };
 
-  const deleteNote = async () => {
-    const res = await deleteData(`/api/note/deleteNote/${deleteNoteId}`);
+  const handleDeleteNote = async () => {
+    const res = await deleteNote(deleteNoteId, token);
     if (res.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
@@ -72,7 +74,7 @@ export default function SearchResult(props) {
 
   useEffect(
     () => {
-      searchNotes();
+      handleSearchNotes();
     },
     // eslint-disable-next-line
     [notes]
@@ -80,7 +82,6 @@ export default function SearchResult(props) {
 
   return (
     <>
-      <ToastContainer />
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
@@ -89,11 +90,11 @@ export default function SearchResult(props) {
         mode={props.mode}
         button1={{
           name: "Delete",
-          callback: deleteNote
+          callback: handleDeleteNote,
         }}
         button2={{
           name: "Cancel",
-          callback: () => () => setDeleteNoteId(null)
+          callback: () => () => setDeleteNoteId(null),
         }}
       />
       <Navbar
@@ -102,8 +103,7 @@ export default function SearchResult(props) {
         title="Magic Notes"
       />
       <div
-        className={`flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28`}
-      >
+        className={`flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28`}>
         <SearchNotes
           mode={props.mode}
           setSearchParams={setSearchParams}
@@ -119,8 +119,7 @@ export default function SearchResult(props) {
                 <div
                   className={`font-normal text-2xl mt-2 ${
                     props.mode === "light" ? "text-black" : "text-white"
-                  }`}
-                >
+                  }`}>
                   No result found
                 </div>
               </div>
@@ -130,15 +129,14 @@ export default function SearchResult(props) {
                   className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${
                     props.mode === "light" ? "bg-gray-100" : " bg-gray-700"
                   }`}
-                  key={note._id}
-                >
+                  key={note._id}>
                   <div className="flex items-center">
                     <div className="flex items-center w-full">
                       <input
                         type="checkbox"
                         className="w-4 h-4 cursor-pointer"
                         checked={note.checked}
-                        onChange={() => checkNote(note._id)}
+                        onChange={() => handleCheckNote(note._id)}
                       />
                       <Link to={`/note/${note._id}`} className={`w-full`}>
                         <input
@@ -166,8 +164,7 @@ export default function SearchResult(props) {
                   </div>
                   <Link to={`/note/${note._id}`}>
                     <div
-                      className={`bg-transparent overflow-hidden h-32 mr-4 ml-6`}
-                    >
+                      className={`bg-transparent overflow-hidden h-32 mr-4 ml-6`}>
                       {note.body
                         .split("\n")
                         .slice(0, 5)
@@ -178,8 +175,7 @@ export default function SearchResult(props) {
                               props.mode === "light"
                                 ? "text-black"
                                 : "text-gray-300"
-                            }`}
-                          >
+                            }`}>
                             {line}
                           </p>
                         ))}

@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import leftArrow from "../assets/images/left_arrow.svg";
 import saveLogo from "../assets/images/save.svg";
 import lightMode from "../assets/images/light_mode.svg";
 import darkMode from "../assets/images/dark_mode.svg";
 import { useParams, useNavigate } from "react-router-dom";
-import putData from "../utils/putData";
-import getData from "../utils/getData";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
 import ConfirmAlert from "./ConfirmAlert";
+import editNote from "../apis/editNote";
+import getNote from "../apis/getNote";
+import TokenContext from "../token/TokenContext";
 
 export default function Note(props) {
+  const {token} = useContext(TokenContext);
   const [isLoading, setLoading] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
@@ -20,14 +22,14 @@ export default function Note(props) {
   const { noteId } = useParams();
   const navigate = useNavigate();
 
-  const editNote = async () => {
+  const handleEditNote = async () => {
     const data = {
       title,
       body,
     };
-    const res = await putData(`/api/note/editNote/${noteId}`, data);
+    const res = await editNote(noteId, data, token);
 
-    if (res.success === true) {
+    if (res.success) {
       setTitle(res.note.title);
       setBody(res.note.body);
       toast("Saved", {
@@ -46,10 +48,10 @@ export default function Note(props) {
     }
   };
 
-  const getNote = async () => {
+  const handleGetNote = async () => {
     setLoading(true);
-    const res = await getData(`/api/note/getNote/${noteId}`);
-    if (res.success === true) {
+    const res = await getNote(noteId, token);
+    if (res.success) {
       const date = new Date(res.note.updatedAt);
 
       setTitle(res.note.title);
@@ -71,9 +73,9 @@ export default function Note(props) {
   };
 
   const handleBack = async () => {
-    const res = await getData(`/api/note/getNote/${noteId}`);
+    const res = await getNote(noteId, token);
     let saved = true;
-    if (res.success === true) {
+    if (res.success) {
       if (res.note.title !== title || res.note.body !== body) {
         saved = false;
       }
@@ -88,14 +90,13 @@ export default function Note(props) {
 
   useEffect(
     () => {
-      getNote();
+      handleGetNote();
     },
     // eslint-disable-next-line
     []
   );
   return (
     <>
-      <ToastContainer />
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
@@ -105,7 +106,7 @@ export default function Note(props) {
         button1={{
           name: "Save",
           callback: () => {
-            editNote();
+            handleEditNote();
             navigate(-1);
           },
         }}
@@ -121,8 +122,7 @@ export default function Note(props) {
           <div
             className={`flex items-center w-full fixed h-14 top-0 left-0 p-2 ${
               props.mode === "light" ? "bg-slate-400" : "bg-black"
-            }`}
-          >
+            }`}>
             <div className="flex items-center w-full">
               <img
                 src={leftArrow}
@@ -158,7 +158,7 @@ export default function Note(props) {
                 className={`w-7 h-7 mx-1 cursor-pointer ${
                   props.mode === "light" ? "invert-0" : "invert"
                 }`}
-                onClick={() => editNote()}
+                onClick={() => handleEditNote()}
               />
             </div>
           </div>
@@ -171,16 +171,14 @@ export default function Note(props) {
               } bg-transparent h-full w-full resize-none`}
               defaultValue={body}
               onChange={(event) => setBody(event.target.value)}
-              placeholder="Note"
-            ></textarea>
+              placeholder="Note"></textarea>
           </div>
           <div
             className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-thin font-mono ${
               props.mode === "light"
                 ? "bg-gray-200 text-black"
                 : "bg-gray-900 text-white"
-            }`}
-          >
+            }`}>
             {editTime}
           </div>
         </div>

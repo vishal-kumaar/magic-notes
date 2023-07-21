@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getAllNotes = async (token) => {
   try {
-    const res = await axios.get(`${REACT_APP_BASE_URL}/api/note/getNotes`, {
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/note/getNotes`, {
       headers: {
         Authorization: token,
       },

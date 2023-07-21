@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import leftArrow from "../assets/images/left_arrow.svg";
-import putData from "../utils/putData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Loading from "../components/Loading";
 import homeIcon from "../assets/images/home_icon.svg";
+import forgotPassword from "../apis/forgotPassword";
+import { toast } from "react-toastify";
 
 export default function ForgotPassword(props) {
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const forgotPassword = async () => {
+  const handleForm = async (event) => {
+    event.preventDefault();
     setLoading(true);
-    const res = await putData("/api/auth/password/forgot", { email });
-    if (res.success === true) {
+    const res = await forgotPassword(email);
+    if (res.success) {
       toast(res.message, {
         type: "success",
         theme: props.mode,
@@ -32,14 +32,8 @@ export default function ForgotPassword(props) {
     setLoading(false);
   };
 
-  const handleForm = (event) => {
-    event.preventDefault();
-    forgotPassword();
-  };
-
   return (
     <>
-      <ToastContainer />
       {isLoading ? (
         <Loading />
       ) : (
@@ -64,13 +58,11 @@ export default function ForgotPassword(props) {
           </div>
           <form
             className="mx-4 sm:mx-10 md:mx-20 lg:mx-36 xl:mx-72 2xl:mx-96 my-20"
-            onSubmit={handleForm}
-          >
+            onSubmit={handleForm}>
             <div
               className={`font-extrabold text-2xl mb-7 text-center ${
                 props.mode === "light" ? "text-black" : "text-white"
-              }`}
-            >
+              }`}>
               Forgot password
             </div>
             <div className="my-6">
@@ -89,8 +81,7 @@ export default function ForgotPassword(props) {
             <div className="my-6">
               <button
                 type="submit"
-                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}
-              >
+                className={`w-full py-3 rounded-3xl font-semibold text-lg bg-blue-500 text-white shadow-lg`}>
                 Submit
               </button>
             </div>

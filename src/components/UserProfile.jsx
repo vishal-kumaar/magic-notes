@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import profileImg from "../assets/images/profile-image.svg";
 import passwordIcon from "../assets/images/password_icon.svg";
 import userIcon from "../assets/images/user_icon.svg";
@@ -7,23 +7,24 @@ import leftArrow from "../assets/images/left_arrow.svg";
 import rightArrow from "../assets/images/right_arrow.svg";
 import loginIcon from "../assets/images/login_icon.svg";
 import { Link, useNavigate } from "react-router-dom";
-import getData from "../utils/getData";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
 import Loading from "./Loading";
 import homeIcon from "../assets/images/home_icon.svg";
 import ConfirmAlert from "./ConfirmAlert";
+import getUserProfile from "../apis/getUserProfile";
+import TokenContext from "../token/TokenContext";
+import { toast } from "react-toastify";
 
 export default function UserProfile(props) {
+  const { token, removeUserToken } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [confirmAlert, setConfirmAlert] = useState(false);
   const navigate = useNavigate();
 
   const getProfile = async () => {
-    const res = await getData("/api/auth/profile");
-    if (res.success === true) {
+    const res = await getUserProfile(token);
+    if (res.success) {
       setUserData(res.user);
     } else {
       setUserData(null);
@@ -31,30 +32,26 @@ export default function UserProfile(props) {
     setLoading(false);
   };
 
-  const logout = async () => {
-    const res = await getData("/api/auth/logout");
-    if (res.success === true) {
-      toast("Logout Successfull", {
-        type: "success",
-        theme: props.mode,
-        autoClose: 2000,
-      });
-    } else {
-      toast(res.message, {
-        type: "error",
-        theme: props.mode,
-        autoClose: 2000,
-      });
-    }
+  const handleLogout = async () => {
+    removeUserToken();
+    toast("Logout successful", {
+      position: "top-right",
+      theme: props.theme,
+      type: "success",
+      autoClose: 3000
+    })
   };
 
-  useEffect(() => {
-    getProfile();
-  }, [userData]);
+  useEffect(
+    () => {
+      getProfile();
+    },
+    // eslint-disable-next-line
+    [userData]
+  );
 
   return (
     <>
-      <ToastContainer />
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
@@ -63,10 +60,10 @@ export default function UserProfile(props) {
         mode={props.mode}
         button1={{
           name: "Logout",
-          callback: logout
+          callback: handleLogout,
         }}
         button2={{
-          name: "Cancel"
+          name: "Cancel",
         }}
       />
       {isLoading ? (
@@ -99,30 +96,26 @@ export default function UserProfile(props) {
               <div
                 className={`text-2xl font-bold mt-4 ${
                   props.mode === "light" ? "text-black" : "text-white"
-                }`}
-              >
+                }`}>
                 {userData ? userData.name : "Unknown user"}
               </div>
               <div
                 className={`text-lg ${
                   props.mode === "light" ? "text-gray-500" : "text-gray-400"
-                }`}
-              >
+                }`}>
                 {userData ? userData.email : ""}
               </div>
             </div>
             <div className="mt-10 mx-8 sm:mx-16 md:mx-24 lg:mx-36 xl:mx-56 2xl:mx-96">
               <Link
                 to={`/update/name/${userData && userData._id}`}
-                className={userData ? "block" : "hidden"}
-              >
+                className={userData ? "block" : "hidden"}>
                 <div
                   className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
                     props.mode === "light"
                       ? "text-gray-700 bg-gray-100"
                       : "text-gray-300 bg-gray-700"
-                  }`}
-                >
+                  }`}>
                   <div className="flex items-center">
                     <img
                       src={userIcon}
@@ -144,15 +137,13 @@ export default function UserProfile(props) {
               </Link>
               <Link
                 to={`/update/password/${userData && userData._id}`}
-                className={userData ? "block" : "hidden"}
-              >
+                className={userData ? "block" : "hidden"}>
                 <div
                   className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
                     props.mode === "light"
                       ? "text-gray-700 bg-gray-100"
                       : "text-gray-300 bg-gray-700"
-                  }`}
-                >
+                  }`}>
                   <div className="flex items-center">
                     <img
                       src={passwordIcon}
@@ -174,15 +165,13 @@ export default function UserProfile(props) {
               </Link>
               <div
                 className={`${userData ? "block" : "hidden"} cursor-pointer`}
-                onClick={() => setConfirmAlert(true)}
-              >
+                onClick={() => setConfirmAlert(true)}>
                 <div
                   className={`flex items-center justify-between shadow-md rounded-2xl px-2 py-1 my-4 ${
                     props.mode === "light"
                       ? "text-gray-700 bg-gray-100"
                       : "text-gray-300 bg-gray-700"
-                  }`}
-                >
+                  }`}>
                   <div className="flex items-center">
                     <img
                       src={logoutIcon}
@@ -208,8 +197,7 @@ export default function UserProfile(props) {
                     props.mode === "light"
                       ? "text-gray-700 bg-gray-100"
                       : "text-gray-300 bg-gray-700"
-                  } ${userData ? "hidden" : "block"}`}
-                >
+                  } ${userData ? "hidden" : "block"}`}>
                   <div className="flex items-center">
                     <img
                       src={loginIcon}
