@@ -4,7 +4,7 @@ const forgotPassword = async (email) => {
   try {
     const res = await axios.put(
       `${REACT_APP_BASE_URL}/api/auth/password/forgot`,
-      email
+      { email }
     );
     return res.data;
   } catch (error) {
