@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const forgotPassword = async (email) => {
+const forgotPassword = async (data) => {
   try {
     const res = await axios.put(
       `${process.env.REACT_APP_BASE_URL}/api/auth/password/forgot`,
-      { email }
+      data
     );
     return res.data;
   } catch (error) {

@@ -13,8 +13,16 @@ export default function ForgotPassword(props) {
 
   const handleForm = async (event) => {
     event.preventDefault();
+
+    const data = {
+      protocol: window.location.protocol,
+      hostname: window.location.hostname,
+      endpoint: "password/forgot",
+      email,
+    };
+    
     setLoading(true);
-    const res = await forgotPassword(email);
+    const res = await forgotPassword(data);
     if (res?.success) {
       toast(res.message, {
         type: "success",
