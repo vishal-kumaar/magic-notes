@@ -81,7 +81,7 @@ export default function SearchResult(props) {
   );
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <ConfirmAlert
         confirmAlert={confirmAlert}
         setConfirmAlert={setConfirmAlert}
@@ -103,7 +103,7 @@ export default function SearchResult(props) {
         title="Magic Notes"
       />
       <div
-        className={`flex flex-col my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28`}>
+        className={`flex flex-col flex-grow my-6 mx-4 sm:mx-10 md:mx-14 lg:mx-20 xl:mx-24 2xl:mx-28`}>
         <SearchNotes
           mode={props.mode}
           setSearchParams={setSearchParams}
@@ -182,6 +182,6 @@ export default function SearchResult(props) {
         )}
       </div>
       <Footer mode={props.mode} />
-    </>
+    </div>
   );
 }

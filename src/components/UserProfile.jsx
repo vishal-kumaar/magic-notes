@@ -69,8 +69,8 @@ export default function UserProfile(props) {
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <div className={props.mode === "light" ? "bg-white" : "bg-gray-800"}>
+        <div className="flex flex-col min-h-screen">
+          <div className={`flex-grow ${props.mode === "light" ? "bg-white" : "bg-gray-800"}`}>
             <div className="flex justify-between items-center py-3 px-5">
               <img
                 src={leftArrow}
@@ -220,7 +220,7 @@ export default function UserProfile(props) {
             </div>
           </div>
           <Footer mode={props.mode} />
-        </>
+        </div>
       )}
     </>
   );

@@ -54,13 +54,13 @@ export default function Home(props) {
   );
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar
         mode={props.mode}
         toggleMode={props.toggleMode}
         title="Magic Notes"
       />
-      <div className="flex flex-col py-6 px-4 sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
+      <div className="flex flex-col flex-grow py-6 px-4 sm:px-10 md:px-14 lg:px-20 xl:px-24 2xl:px-28">
         <Link to={`/search?input=`}>
           <SearchNotes mode={props.mode} focus={false} />
         </Link>
@@ -95,6 +95,6 @@ export default function Home(props) {
         <NotesList mode={props.mode} notes={notes} isLoading={isLoading} />
       </div>
       <Footer mode={props.mode} />
-    </>
+    </div>
   );
 }
