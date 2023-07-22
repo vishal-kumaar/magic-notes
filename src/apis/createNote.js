@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const createNote = async (title, token) => {
+const createNote = async (data, token) => {
   try {
     const res = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/api/note/createNote`,
-      { title },
+      data,
       {
         headers: {
           Authorization: token,
