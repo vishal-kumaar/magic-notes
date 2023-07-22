@@ -12,7 +12,7 @@ export default function ConfirmAlert(props) {
           props.confirmAlert ? "translate-y-0" : "-translate-y-full"
         } transition ease-in-out duration-700`}>
         <div
-          className={`bg-white shadow-2xl mx-4 px-10 py-8 rounded-lg ${
+          className={`shadow-2xl mx-4 px-10 py-8 rounded-lg ${
             props.mode === "dark"
               ? "bg-gray-700 text-white"
               : "bg-white text-black"
