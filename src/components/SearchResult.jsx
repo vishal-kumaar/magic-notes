@@ -138,7 +138,9 @@ export default function SearchResult(props) {
                         checked={note.checked}
                         onChange={() => handleCheckNote(note._id)}
                       />
-                      <Link to={`/note/${note._id}`} className={`w-full outline-none`}>
+                      <Link
+                        to={`/note/${note._id}`}
+                        className={`w-full outline-none`}>
                         <input
                           className={`inline font-signika ml-1 text-xl outline-none pointer-events-none w-full bg-transparent ${
                             props.mode === "light" ? "text-black" : "text-white"
@@ -163,23 +165,15 @@ export default function SearchResult(props) {
                     </div>
                   </div>
                   <Link to={`/note/${note._id}`} className="outline-none">
-                    <div
-                      className={`bg-transparent font-firasans overflow-hidden h-32 mr-4 ml-6`}>
-                      {note.body
-                        .split("\n")
-                        .slice(0, 5)
-                        .map((line, index) => (
-                          <p
-                            key={index}
-                            className={`${
-                              props.mode === "light"
-                                ? "text-black"
-                                : "text-gray-300"
-                            }`}>
-                            {line}
-                          </p>
-                        ))}
-                    </div>
+                    <p
+                      className={`bg-transparent w-full font-firasans line-clamp-5 mb-2 pr-14 ml-6 ${
+                        props.mode === "light" ? "text-black" : "text-gray-300"
+                      }`}
+                      style={{
+                        whiteSpace: "pre-wrap",
+                      }}>
+                      {note.body}
+                    </p>
                   </Link>
                 </div>
               ))

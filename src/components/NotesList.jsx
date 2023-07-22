@@ -10,7 +10,7 @@ import deleteNote from "../apis/deleteNote";
 import TokenContext from "../token/TokenContext";
 
 export default function NotesList(props) {
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const [confirmAlert, setConfirmAlert] = useState(false);
   const [deleteNoteId, setDeleteNoteId] = useState(null);
 
@@ -52,11 +52,11 @@ export default function NotesList(props) {
         mode={props.mode}
         button1={{
           name: "Delete",
-          callback: handleDeleteNote
+          callback: handleDeleteNote,
         }}
         button2={{
           name: "Cancel",
-          callback: () => () => setDeleteNoteId(null)
+          callback: () => () => setDeleteNoteId(null),
         }}
       />
       {props.isLoading ? (
@@ -75,8 +75,7 @@ export default function NotesList(props) {
               <div
                 className={`font-normal font-firasans text-xl mt-2 ${
                   props.mode === "light" ? "text-black" : "text-white"
-                }`}
-              >
+                }`}>
                 Nothing to show add you first note
               </div>
             </div>
@@ -86,8 +85,7 @@ export default function NotesList(props) {
                 className={`my-5 pl-2 pt-2 shadow-md rounded-lg overflow-hidden ${
                   props.mode === "light" ? "bg-gray-100" : " bg-gray-700"
                 }`}
-                key={note._id}
-              >
+                key={note._id}>
                 <div className="flex items-center">
                   <div className="flex items-center w-full">
                     <input
@@ -96,7 +94,9 @@ export default function NotesList(props) {
                       checked={note.checked}
                       onChange={() => handleCheckNote(note._id)}
                     />
-                    <Link to={`/note/${note._id}`} className={`w-full outline-none`}>
+                    <Link
+                      to={`/note/${note._id}`}
+                      className={`w-full outline-none`}>
                       <input
                         className={`inline ml-2 text-xl w-full font-signika pointer-events-none bg-transparent outline-none font-bold ${
                           props.mode === "light" ? "text-black" : "text-white"
@@ -121,25 +121,15 @@ export default function NotesList(props) {
                   </div>
                 </div>
                 <Link to={`/note/${note._id}`} className="outline-none">
-                  <div
-                    className={`bg-transparent font-firasans overflow-hidden h-32 mr-4 ml-6`}
-                  >
-                    {note.body
-                      .split("\n")
-                      .slice(0, 5)
-                      .map((line, index) => (
-                        <p
-                          key={index}
-                          className={`${
-                            props.mode === "light"
-                              ? "text-black"
-                              : "text-gray-300"
-                          }`}
-                        >
-                          {line}
-                        </p>
-                      ))}
-                  </div>
+                  <p
+                    className={`bg-transparent w-full font-firasans line-clamp-5 mb-2 pr-14 ml-6 ${
+                      props.mode === "light" ? "text-black" : "text-gray-300"
+                    }`}
+                    style={{
+                      whiteSpace: "pre-wrap",
+                    }}>
+                    {note.body}
+                  </p>
                 </Link>
               </div>
             ))
