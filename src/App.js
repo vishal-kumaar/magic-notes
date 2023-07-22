@@ -14,6 +14,7 @@ import SearchResult from "./components/SearchResult";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TokenProvider from "./token/TokenProvider";
+import CreateNote from "./components/CreateNote";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("theme") || "light");
@@ -48,6 +49,12 @@ function App() {
             path="/search"
             element={
               <SearchResult mode={mode} toggleMode={toggleMode} />
+            }></Route>
+          <Route
+            exect
+            path="/note/create"
+            element={
+              <CreateNote mode={mode} toggleMode={toggleMode} />
             }></Route>
           <Route
             exect

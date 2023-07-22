@@ -164,7 +164,7 @@ export default function SearchResult(props) {
                       />
                     </div>
                   </div>
-                  <Link to={`/note/${note._id}`} className="outline-none">
+                  <Link to={`/note/${note._id}`} className="outline-none block h-32">
                     <p
                       className={`bg-transparent w-full font-firasans line-clamp-5 mb-2 pr-14 ml-6 ${
                         props.mode === "light" ? "text-black" : "text-gray-300"
