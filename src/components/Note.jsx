@@ -13,7 +13,7 @@ import getNote from "../apis/getNote";
 import TokenContext from "../token/TokenContext";
 
 export default function Note(props) {
-  const {token} = useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
@@ -118,9 +118,9 @@ export default function Note(props) {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col min-h-screen">
           <div
-            className={`flex items-center w-full fixed h-14 top-0 left-0 p-2 ${
+            className={`flex items-center w-full sticky h-14 top-0 left-0 p-2 ${
               props.mode === "light" ? "bg-slate-400" : "bg-black"
             }`}>
             <div className="flex items-center w-full">
@@ -162,19 +162,24 @@ export default function Note(props) {
               />
             </div>
           </div>
-          <div className="mt-14 mb-6 h-full">
-            <textarea
+          <div className="flex-grow mb-2">
+            <div
               className={`pt-2 bg-transparent font-firasans font-medium px-11 text-xl outline-none ${
                 props.mode === "light"
                   ? "text-black placeholder:text-black/60"
                   : "text-white placeholder:text-white/60"
               } bg-transparent h-full w-full resize-none`}
-              defaultValue={body}
-              onChange={(event) => setBody(event.target.value)}
-              placeholder="Note"></textarea>
+              style={{
+                whiteSpace: "pre-wrap",
+              }}
+              contentEditable={true}
+              onBlur={(event) => setBody(event.target.textContent)}
+              placeholder="Note">
+              {body}
+            </div>
           </div>
           <div
-            className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-roboto font-medium ${
+            className={`w-full h-6 text-center text-sm font-roboto font-medium ${
               props.mode === "light"
                 ? "bg-gray-200 text-black"
                 : "bg-gray-900 text-white"
