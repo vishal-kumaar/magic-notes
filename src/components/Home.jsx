@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import NoteForm from "./NoteForm";
 import Navbar from "./Navbar";
 import SearchNotes from "./SearchNotes";
 import Footer from "./Footer";
@@ -13,7 +12,6 @@ import TokenContext from "../token/TokenContext";
 export default function Home(props) {
   const { token, removeUserToken } = useContext(TokenContext);
   const [isLoading, setLoading] = useState(true);
-  const [formVisibility, setFormVisibility] = useState("hidden");
   const [notes, setNotes] = useState(null);
   const navigate = useNavigate();
 
@@ -74,24 +72,12 @@ export default function Home(props) {
             </h1>
             <button
               className="bg-green-500 px-3 py-2 rounded-md text-white font-poppins font-medium shadow-md"
-              onClick={() => {
-                if (formVisibility === "hidden") {
-                  setFormVisibility("block");
-                } else {
-                  setFormVisibility("hidden");
-                }
-              }}>
-              {formVisibility === "hidden" ? "Create New Note" : "Done"}
+              onClick={() => navigate("/note/create")}>
+              Create New Note
             </button>
           </div>
           <hr />
         </div>
-        <NoteForm
-          mode={props.mode}
-          visible={formVisibility}
-          setNotes={setNotes}
-          notes={notes}
-        />
         <NotesList mode={props.mode} notes={notes} isLoading={isLoading} />
       </div>
       <Footer mode={props.mode} />
