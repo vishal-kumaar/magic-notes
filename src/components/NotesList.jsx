@@ -16,7 +16,7 @@ export default function NotesList(props) {
 
   const handleCheckNote = async (noteId) => {
     const res = await checkNote(noteId, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "warning",
@@ -27,7 +27,7 @@ export default function NotesList(props) {
 
   const handleDeleteNote = async () => {
     const res = await deleteNote(deleteNoteId, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "error",

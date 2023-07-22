@@ -13,7 +13,7 @@ export default function VerifyEmail(props) {
   const verify = async () => {
     setLoading(true);
     const res = await verifyUser(userId, OTP);
-    if (res.success) {
+    if (res?.success) {
       toast("Email Verification Successful", {
         type: "success",
         mode: props.mode,
@@ -22,7 +22,7 @@ export default function VerifyEmail(props) {
 
       navigate("/login");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         mode: props.mode,
         autoClose: 2000,

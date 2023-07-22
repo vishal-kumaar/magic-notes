@@ -19,7 +19,7 @@ export default function Home(props) {
 
   const isLoggedIn = async () => {
     const res = await getUserProfile(token);
-    if (!res.success) {
+    if (!res?.success) {
       setTimeout(() => {
         removeUserToken();
         navigate("/login");
@@ -29,7 +29,7 @@ export default function Home(props) {
 
   const handleNotes = async () => {
     const res = await getAllNotes(token);
-    if (res.success) {
+    if (res?.success) {
       setNotes(res.notes);
     } else {
       setNotes(null);

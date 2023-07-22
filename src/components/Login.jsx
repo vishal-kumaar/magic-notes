@@ -24,7 +24,7 @@ export default function Login(props) {
       password: password,
     });
 
-    if (res.success) {
+    if (res?.success) {
       toast("Login successfull", {
         theme: props.mode,
         type: "success",
@@ -33,7 +33,7 @@ export default function Login(props) {
       setUserToken(res.token);
       navigate("/");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,

@@ -29,7 +29,7 @@ export default function Note(props) {
     };
     const res = await editNote(noteId, data, token);
 
-    if (res.success) {
+    if (res?.success) {
       setTitle(res.note.title);
       setBody(res.note.body);
       toast("Saved", {
@@ -40,7 +40,7 @@ export default function Note(props) {
       const date = new Date(res.note.updatedAt);
       setEditTime(editDate(date));
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         theme: props.mode,
         type: "error",
         autoClose: 1500,
@@ -51,7 +51,7 @@ export default function Note(props) {
   const handleGetNote = async () => {
     setLoading(true);
     const res = await getNote(noteId, token);
-    if (res.success) {
+    if (res?.success) {
       const date = new Date(res.note.updatedAt);
 
       setTitle(res.note.title);
@@ -75,7 +75,7 @@ export default function Note(props) {
   const handleBack = async () => {
     const res = await getNote(noteId, token);
     let saved = true;
-    if (res.success) {
+    if (res?.success) {
       if (res.note.title !== title || res.note.body !== body) {
         saved = false;
       }

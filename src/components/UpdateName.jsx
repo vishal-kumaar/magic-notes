@@ -22,7 +22,7 @@ export default function UpdateName(props) {
       password,
     };
     const res = await updateUserName(userId, data, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Name successfully updated", {
         theme: props.mode,
         type: "success",
@@ -31,7 +31,7 @@ export default function UpdateName(props) {
 
       navigate("/profile");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,

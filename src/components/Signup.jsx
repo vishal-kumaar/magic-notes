@@ -22,7 +22,7 @@ export default function Signup(props) {
     };
 
     const res = await signup(data);
-    if (res.success) {
+    if (res?.success) {
       toast(res.message, {
         theme: props.mode,
         type: "success",
@@ -30,7 +30,7 @@ export default function Signup(props) {
       });
       navigate(`/user/verify/${res.user._id}`);
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,

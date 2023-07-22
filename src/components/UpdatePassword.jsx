@@ -25,7 +25,7 @@ export default function UpdatePassword(props) {
     };
 
     const res = await updatePassword(userId, data, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Password successfully updated", {
         theme: props.mode,
         type: "success",
@@ -34,7 +34,7 @@ export default function UpdatePassword(props) {
 
       navigate("/profile");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,

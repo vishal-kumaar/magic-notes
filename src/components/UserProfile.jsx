@@ -24,7 +24,7 @@ export default function UserProfile(props) {
 
   const getProfile = async () => {
     const res = await getUserProfile(token);
-    if (res.success) {
+    if (res?.success) {
       setUserData(res.user);
     } else {
       setUserData(null);
@@ -32,7 +32,7 @@ export default function UserProfile(props) {
     setLoading(false);
   };
 
-  const handleLogout = async () => {
+  const logout = async () => {
     removeUserToken();
     toast("Logout successful", {
       position: "top-right",
@@ -60,7 +60,7 @@ export default function UserProfile(props) {
         mode={props.mode}
         button1={{
           name: "Logout",
-          callback: handleLogout,
+          callback: logout,
         }}
         button2={{
           name: "Cancel",

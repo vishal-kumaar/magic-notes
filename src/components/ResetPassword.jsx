@@ -20,7 +20,7 @@ export default function ResetPassword(props) {
       confirmPassword: confirmPassword,
     };
     const res = await resetPassword(data, resetToken);
-    if (res.success) {
+    if (res?.success) {
       toast("Password reset successfull", {
         theme: props.mode,
         type: "success",
@@ -29,7 +29,7 @@ export default function ResetPassword(props) {
 
       navigate("/login");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,

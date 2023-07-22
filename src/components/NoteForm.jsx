@@ -9,7 +9,7 @@ export default function NoteForm(props) {
 
   const handleCreateNote = async () => {
     const res = await createNote(title, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Note created successfully", {
         theme: props.mode,
         type: "success",
@@ -21,7 +21,7 @@ export default function NoteForm(props) {
       if (props.notes === null) {
         props.setNotes([res.note]);
       }
-    } else if (res.message === "Not authorized to access this route") {
+    } else if (res?.message === "Not authorized to access this route") {
       toast("Please login to access this", {
         theme: props.mode,
         type: "warning",

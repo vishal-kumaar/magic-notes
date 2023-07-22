@@ -26,7 +26,7 @@ export default function SearchResult(props) {
   const handleSearchNotes = async () => {
     const input = queryParams.get("input");
     const res = await searchNotes(input, token);
-    if (res.success) {
+    if (res?.success) {
       setNotes(res.notes);
     } else {
       if (notes === null) {
@@ -40,7 +40,7 @@ export default function SearchResult(props) {
 
   const handleCheckNote = async (noteId) => {
     const res = await checkNote(noteId, token);
-    if (res.success) {
+    if (res?.success) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "warning",
@@ -51,7 +51,7 @@ export default function SearchResult(props) {
 
   const handleDeleteNote = async () => {
     const res = await deleteNote(deleteNoteId, token);
-    if (res.success === false) {
+    if (res?.success === false) {
       toast("Something went wrong", {
         theme: props.mode,
         type: "error",

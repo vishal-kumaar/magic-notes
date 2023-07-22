@@ -15,7 +15,7 @@ export default function ForgotPassword(props) {
     event.preventDefault();
     setLoading(true);
     const res = await forgotPassword(email);
-    if (res.success) {
+    if (res?.success) {
       toast(res.message, {
         type: "success",
         theme: props.mode,
@@ -23,7 +23,7 @@ export default function ForgotPassword(props) {
       });
       setEmail("");
     } else {
-      toast(res.message, {
+      toast(res?.message, {
         type: "error",
         theme: props.mode,
         autoClose: 2000,
