@@ -94,19 +94,19 @@ export default function UserProfile(props) {
                 <img src={profileImg} alt="profile-pic" className="w-32 h-32" />
               </div>
               <div
-                className={`text-2xl font-bold mt-4 ${
+                className={`text-2xl font-signika mt-4 ${
                   props.mode === "light" ? "text-black" : "text-white"
                 }`}>
                 {userData ? userData.name : "Unknown user"}
               </div>
               <div
-                className={`text-lg ${
+                className={`text-lg font-firasans ${
                   props.mode === "light" ? "text-gray-500" : "text-gray-400"
                 }`}>
                 {userData ? userData.email : ""}
               </div>
             </div>
-            <div className="mt-10 mx-8 sm:mx-16 md:mx-24 lg:mx-36 xl:mx-56 2xl:mx-96">
+            <div className="mt-10 mx-8 font-poppins sm:mx-16 md:mx-24 lg:mx-36 xl:mx-56 2xl:mx-96">
               <Link
                 to={`/update/name/${userData && userData._id}`}
                 className={userData ? "block" : "hidden"}>

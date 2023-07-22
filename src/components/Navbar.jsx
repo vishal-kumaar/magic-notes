@@ -10,7 +10,7 @@ export default function Navbar(props) {
 
   return (
     <div
-      className={`flex z-10 sticky w-full top-0 left-0 justify-between items-center px-4 flex-wrap ${
+      className={`flex z-10 fo sticky w-full top-0 left-0 justify-between items-center px-4 flex-wrap ${
         props.mode === "dark" ? "bg-black" : "bg-gray-700"
       }`}
     >
@@ -18,7 +18,7 @@ export default function Navbar(props) {
         <div className="text-black my-3 bg-white p-1 rounded-lg text-sm font-mono">
           <img width={25} height={25} src={logo} alt="" />
         </div>
-        <div className="text-white font-bold ml-4">{props.title}</div>
+        <div className="text-white font-bold ml-4 font-signika">{props.title}</div>
       </div>
       <div className="flex items-center text-white justify-between">
         <div className="mx-2">

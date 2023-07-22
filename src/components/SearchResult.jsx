@@ -117,7 +117,7 @@ export default function SearchResult(props) {
               <div className={`flex flex-col items-center mt-16`}>
                 <img src={notFound} alt="not-found" className={`w-60 h-60`} />
                 <div
-                  className={`font-normal text-2xl mt-2 ${
+                  className={`font-firasans text-2xl mt-2 ${
                     props.mode === "light" ? "text-black" : "text-white"
                   }`}>
                   No result found
@@ -138,9 +138,9 @@ export default function SearchResult(props) {
                         checked={note.checked}
                         onChange={() => handleCheckNote(note._id)}
                       />
-                      <Link to={`/note/${note._id}`} className={`w-full`}>
+                      <Link to={`/note/${note._id}`} className={`w-full outline-none`}>
                         <input
-                          className={`inline ml-1 text-xl pointer-events-none w-full bg-transparent font-bold font-[serif] ${
+                          className={`inline font-signika ml-1 text-xl outline-none pointer-events-none w-full bg-transparent ${
                             props.mode === "light" ? "text-black" : "text-white"
                           }`}
                           value={note.title}
@@ -162,9 +162,9 @@ export default function SearchResult(props) {
                       />
                     </div>
                   </div>
-                  <Link to={`/note/${note._id}`}>
+                  <Link to={`/note/${note._id}`} className="outline-none">
                     <div
-                      className={`bg-transparent overflow-hidden h-32 mr-4 ml-6`}>
+                      className={`bg-transparent font-firasans overflow-hidden h-32 mr-4 ml-6`}>
                       {note.body
                         .split("\n")
                         .slice(0, 5)

@@ -133,7 +133,7 @@ export default function Note(props) {
                 onClick={handleBack}
               />
               <input
-                className={`ml-3 text-3xl font-bold outline-none w-full bg-transparent ${
+                className={`ml-3 text-3xl font-signika outline-none w-full bg-transparent ${
                   props.mode === "light"
                     ? "text-black placeholder:text-black/60"
                     : "text-white placeholder:text-white/60"
@@ -164,7 +164,7 @@ export default function Note(props) {
           </div>
           <div className="mt-14 mb-6 h-full">
             <textarea
-              className={`pt-2 bg-transparent px-11 text-2xl font-semibold outline-none ${
+              className={`pt-2 bg-transparent font-firasans font-medium px-11 text-xl outline-none ${
                 props.mode === "light"
                   ? "text-black placeholder:text-black/60"
                   : "text-white placeholder:text-white/60"
@@ -174,7 +174,7 @@ export default function Note(props) {
               placeholder="Note"></textarea>
           </div>
           <div
-            className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-thin font-mono ${
+            className={`fixed bottom-0 left-0 w-full h-6 text-center text-sm font-roboto font-medium ${
               props.mode === "light"
                 ? "bg-gray-200 text-black"
                 : "bg-gray-900 text-white"

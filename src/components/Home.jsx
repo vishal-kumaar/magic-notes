@@ -67,13 +67,13 @@ export default function Home(props) {
         <div className="my-8">
           <div className="flex justify-between items-center mb-4">
             <h1
-              className={`font-extrabold font-sans text-3xl ${
+              className={`font-signika text-3xl ${
                 props.mode === "light" ? "text-black" : "text-white"
               }`}>
               All Notes
             </h1>
             <button
-              className="bg-green-500 px-3 py-2 rounded-md text-white font-semibold shadow-md"
+              className="bg-green-500 px-3 py-2 rounded-md text-white font-poppins font-medium shadow-md"
               onClick={() => {
                 if (formVisibility === "hidden") {
                   setFormVisibility("block");

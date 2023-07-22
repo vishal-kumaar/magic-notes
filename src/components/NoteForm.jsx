@@ -51,7 +51,7 @@ export default function NoteForm(props) {
           <input
             type="text"
             placeholder="Title..."
-            className={`outline-none w-full p-1 text-lg font-serif bg-transparent ${
+            className={`outline-none w-full p-1 text-lg font-firasans bg-transparent ${
               props.mode === "light"
                 ? "placeholder:text-gray-500 text-gray-500 "
                 : "placeholder:text-white text-white "
@@ -63,7 +63,7 @@ export default function NoteForm(props) {
         <div className="">
           <button
             type="submit"
-            className="px-3 py-1 text-lg bg-blue-600 text-white rounded font-mono">
+            className="px-3.5 py-2 text-base bg-blue-600 text-white rounded font-roboto">
             Create
           </button>
         </div>

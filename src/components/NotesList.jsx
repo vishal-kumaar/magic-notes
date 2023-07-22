@@ -73,7 +73,7 @@ export default function NotesList(props) {
                 }`}
               />
               <div
-                className={`font-normal text-xl mt-2 ${
+                className={`font-normal font-firasans text-xl mt-2 ${
                   props.mode === "light" ? "text-black" : "text-white"
                 }`}
               >
@@ -96,13 +96,13 @@ export default function NotesList(props) {
                       checked={note.checked}
                       onChange={() => handleCheckNote(note._id)}
                     />
-                    <Link to={`/note/${note._id}`} className={`w-full`}>
+                    <Link to={`/note/${note._id}`} className={`w-full outline-none`}>
                       <input
-                        className={`inline ml-2 text-xl w-full pointer-events-none bg-transparent outline-none font-bold font-[serif] ${
+                        className={`inline ml-2 text-xl w-full font-signika pointer-events-none bg-transparent outline-none font-bold ${
                           props.mode === "light" ? "text-black" : "text-white"
                         }`}
                         value={note.title}
-                        onChange={() => {}}
+                        readOnly={true}
                       />
                     </Link>
                   </div>
@@ -120,9 +120,9 @@ export default function NotesList(props) {
                     />
                   </div>
                 </div>
-                <Link to={`/note/${note._id}`}>
+                <Link to={`/note/${note._id}`} className="outline-none">
                   <div
-                    className={`bg-transparent overflow-hidden h-32 mr-4 ml-6`}
+                    className={`bg-transparent font-firasans overflow-hidden h-32 mr-4 ml-6`}
                   >
                     {note.body
                       .split("\n")
