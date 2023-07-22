@@ -173,8 +173,7 @@ export default function Note(props) {
                 whiteSpace: "pre-wrap",
               }}
               contentEditable={true}
-              onBlur={(event) => setBody(event.target.textContent)}
-              placeholder="Note">
+              onBlur={(event) => setBody(event.target.textContent)}>
               {body}
             </div>
           </div>
